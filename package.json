@@ -1,0 +1,27 @@
+{
+  "name": "changelogopenapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andretrindade/changeLogOpenAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andretrindade/changeLogOpenAPI/issues"
+  },
+  "homepage": "https://github.com/andretrindade/changeLogOpenAPI#readme",
+  "devDependencies": {
+    "@types/jest": "^28.1.3",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
+  }
+}
