@@ -3,7 +3,7 @@ import ChangeDTO from "../dtos/ChangeDTO";
 
 export default class  FactoryChangeDTO{
 
-    public static createEdited(field: string, valueOld:any, valueCurrent: any, path : string):ChangeDTO{
+    public static createEdited(field: string, valueOld:any, valueCurrent: any, path : string[]):ChangeDTO{
 
         const change : ChangeDTO =  {
             field : field,
@@ -16,7 +16,7 @@ export default class  FactoryChangeDTO{
         return change;
 }
 
-    public static createAdded(field: string, value:any, path : string):ChangeDTO{
+    public static createAdded(field: string, value:any, path : string[]):ChangeDTO{
 
         const change : ChangeDTO =  {
             field : field,
@@ -28,7 +28,7 @@ export default class  FactoryChangeDTO{
         return change;
     }
 
-    public  static createRemoved(field: string, value:any, path : string):ChangeDTO{
+    public  static createRemoved(field: string, value:any, path : string[]):ChangeDTO{
         const change : ChangeDTO =  {
             field : field,
             valueOld : value, 

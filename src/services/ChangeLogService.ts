@@ -1,3 +1,4 @@
+import { TypeChange } from "../constants/Constant";
 import ChangeDTO from "../dtos/ChangeDTO";
 import ChangeLogDTO from "../dtos/ChangeLogDTO";
 import DictionaryDTO from "../dtos/DictionaryDTO";
@@ -12,6 +13,17 @@ export default class ChangeLogService{
             description = dictionary.description;
             description = description.replace("{valorAntigo}", change.valueOld)
             description = description.replace("{valorAtual}", change.valueCurrent)
+        }else{
+            switch(change.typeChange){
+                case TypeChange.added : description = "Campo adicionado."
+                break;
+                
+                case TypeChange.removed : description = "Campo removido."
+                break;
+
+                case TypeChange.edited : description = "Campo alterado"
+                break;
+            }
         }
 
         let changeLog : ChangeLogDTO = 
@@ -19,7 +31,7 @@ export default class ChangeLogService{
             change : change, 
             dictionary : dictionary,
             description : description,
-            path : change.path, 
+            path : change.path.join('/'), 
             api : change.field
 
         }

@@ -10,23 +10,24 @@ export default class DiffChecker {
     return changes;
   }
 
-  public diff(objOld: any, objCurrent: any): ChangeDTO[] {
+  public diff(objOld: any, objCurrent: any, path?:string[]): ChangeDTO[] {
     var typeOld = typeof objOld;
     var typeCurrent = typeof objCurrent;
+    path = path || [];
     var fieldsOld = Object.getOwnPropertyNames(objOld);
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
     let changes: ChangeDTO[] = [];
 
 
-    changes.push(...this.getFieldEditedOrRemoved(objOld, objCurrent));
+    changes.push(...this.getFieldEditedOrRemoved(objOld, objCurrent, path));
 
-    changes.push(...this.getFieldAdded(objOld, objCurrent));
+    changes.push(...this.getFieldAdded(objOld, objCurrent, path));
 
 
     return changes;
   }
 
-  public getFieldAdded(objOld: any, objCurrent: any): ChangeDTO[] {
+  public getFieldAdded(objOld: any, objCurrent: any, path:string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     var fieldsOld = Object.getOwnPropertyNames(objOld);
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
@@ -36,13 +37,13 @@ export default class DiffChecker {
 
     fieldsCurrentAdded.forEach(fieldCurrent => {
       changes.push(
-        FactoryChangeDTO.createAdded(fieldCurrent, objCurrent[fieldCurrent], fieldCurrent)
+        FactoryChangeDTO.createAdded(fieldCurrent, objCurrent[fieldCurrent], path)
       );
     })
     return changes;
   }
 
-  public getFieldEditedOrRemoved(objOld: any, objCurrent: any): ChangeDTO[] {
+  public getFieldEditedOrRemoved(objOld: any, objCurrent: any, path : string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     var fieldsOld = Object.getOwnPropertyNames(objOld);
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
@@ -50,21 +51,24 @@ export default class DiffChecker {
     fieldsOld.forEach(fieldOld => {
       let objChange: ChangeDTO;
 
-      let fielndCurrent = fieldsCurrent.find(fielndCurrent => fielndCurrent === fieldOld);
+      let fieldCurrent = fieldsCurrent.find(fielndCurrent => fielndCurrent === fieldOld);
       let valueOld = objOld[fieldOld];
 
 
       // was edited
-      if (fielndCurrent !== undefined) {
-        let valueCurrent = objCurrent[fielndCurrent];
-
+      if (fieldCurrent !== undefined) {
+        let valueCurrent = objCurrent[fieldCurrent];
+        if(typeof valueCurrent == 'object'){
+          path.push(fieldCurrent);
+          changes.push(...this.diff(valueOld, valueCurrent, path));
+        }else
         if (valueOld !== valueCurrent) {
-          objChange = FactoryChangeDTO.createEdited(fieldOld, valueOld, valueCurrent, fieldOld)
+          objChange = FactoryChangeDTO.createEdited(fieldOld, valueOld, valueCurrent, path)
         }
       }
       // was removed
       else {
-        objChange = FactoryChangeDTO.createRemoved(fieldOld, valueOld, fieldOld)
+        objChange = FactoryChangeDTO.createRemoved(fieldOld, valueOld, path)
       }
 
       if (objChange) {

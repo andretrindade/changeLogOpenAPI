@@ -16,7 +16,8 @@ describe('testing diffCheckers file', () => {
 
       expect(result[0].valueCurrent).toBe('teste2');
       expect(result[0].valueOld).toBe('teste1');
-      expect(result[0].path).toBe('campo');
+      expect(result[0].path.length).toBe(0);
+
   });
 
   test('field Added', () => {
@@ -35,7 +36,8 @@ describe('testing diffCheckers file', () => {
 
       expect(result[0].valueCurrent).toBe('andre');
       expect(result[0].valueOld).toBe(undefined);
-      expect(result[0].path).toBe('nome');
+      expect(result[0].path.length).toBe(0);
+
   });
 
   test('field removed', () => {
@@ -54,6 +56,31 @@ describe('testing diffCheckers file', () => {
 
       expect(result[0].valueCurrent).toBe(undefined);
       expect(result[0].valueOld).toBe(123);
-      expect(result[0].path).toBe('amount');
+      expect(result[0].path.length).toBe(0);
+  });
+
+  test('field edited with subField', () => {
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+        campo: 'teste1',
+        fee: {
+          feeName : 'saque coberto'
+        }
+    };  
+
+    
+
+    var objCurrente = {
+      campo: 'teste1',
+      fee: {
+        feeName : 'saque a descoberto'
+      }
+    };
+    let result = diff.getChangeDiff(objOld,objCurrente);
+    expect(result[0].valueOld).toBe('saque coberto');
+    expect(result[0].valueCurrent).toBe('saque a descoberto');
+    expect(result[0].path[0]).toBe('fee');
   });
 });
