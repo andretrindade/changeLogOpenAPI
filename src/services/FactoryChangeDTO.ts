@@ -1,3 +1,4 @@
+import { TypeChange } from "../constants/Constant";
 import ChangeDTO from "../dtos/ChangeDTO";
 
 export default class  FactoryChangeDTO{
@@ -9,7 +10,8 @@ export default class  FactoryChangeDTO{
             valueCurrent : valueCurrent, 
             valueOld : valueOld, 
             path : path, 
-            type : 'edited' };
+            typeChange : TypeChange.edited };
+
 
         return change;
 }
@@ -20,7 +22,8 @@ export default class  FactoryChangeDTO{
             field : field,
             valueCurrent : value, 
             path : path, 
-            type : 'added' };
+            typeChange : TypeChange.added };
+
 
         return change;
     }
@@ -30,7 +33,7 @@ export default class  FactoryChangeDTO{
             field : field,
             valueOld : value, 
             path : path, 
-            type : 'removed' };
+            typeChange : TypeChange.removed };
 
         return change;
     }
