@@ -357,4 +357,9 @@ describe('testing diffCheckers file', () => {
     expect(itemRemoved.path[0]).toBe('release');
     expect(itemRemoved.path[1]).toBe('fee');
   });
+
+
+
+
+
 });
