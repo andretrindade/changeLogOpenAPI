@@ -10,7 +10,7 @@ export default class DiffChecker {
     return changes;
   }
 
-  public diff(objOld: any, objCurrent: any, path?:string[]): ChangeDTO[] {
+  public diff(objOld: any, objCurrent: any, path?: string[]): ChangeDTO[] {
     var typeOld = typeof objOld;
     var typeCurrent = typeof objCurrent;
     path = path || [];
@@ -27,7 +27,7 @@ export default class DiffChecker {
     return changes;
   }
 
-  public getFieldAdded(objOld: any, objCurrent: any, path:string[]): ChangeDTO[] {
+  public getFieldAdded(objOld: any, objCurrent: any, path: string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     var fieldsOld = Object.getOwnPropertyNames(objOld);
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
@@ -43,7 +43,7 @@ export default class DiffChecker {
     return changes;
   }
 
-  public getFieldEditedOrRemoved(objOld: any, objCurrent: any, path : string[]): ChangeDTO[] {
+  public getFieldEditedOrRemoved(objOld: any, objCurrent: any, path: string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     var fieldsOld = Object.getOwnPropertyNames(objOld);
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
@@ -58,16 +58,24 @@ export default class DiffChecker {
       // was edited
       if (fieldCurrent !== undefined) {
         let valueCurrent = objCurrent[fieldCurrent];
-        if(Array.isArray(valueCurrent)){
-          valueCurrent = valueCurrent[0];
-          valueOld = valueOld[0];
-        }
-        if(typeof valueCurrent == 'object'){        
-          path.push(fieldCurrent);
-          changes.push(...this.diff(valueOld, valueCurrent, path));
-        }else
-        if (valueOld !== valueCurrent) {
-          objChange = FactoryChangeDTO.createEdited(fieldOld, valueOld, valueCurrent, path)
+
+        if (Array.isArray(valueCurrent) && typeof valueCurrent[0] !== 'object') {
+          changes.push(...this.getChangeDiffArray(fieldCurrent,valueOld,valueCurrent,path))
+
+        }else{
+
+          if (Array.isArray(valueCurrent) && typeof valueCurrent[0] == 'object') {
+
+            valueCurrent = valueCurrent[0];
+            valueOld = valueOld[0];
+          }
+          if (typeof valueCurrent == 'object') {
+            path.push(fieldCurrent);
+            changes.push(...this.diff(valueOld, valueCurrent, path));
+          } else
+            if (valueOld !== valueCurrent) {
+              objChange = FactoryChangeDTO.createEdited(fieldOld, valueOld, valueCurrent, path)
+            }
         }
       }
       // was removed
@@ -79,6 +87,29 @@ export default class DiffChecker {
         changes.push(objChange);
       }
     });
+
+    return changes;
+  }
+
+  public getChangeDiffArray(field : string,objOld : object[], objCurrent : object[], path : string[]):ChangeDTO[]{
+    let changes: ChangeDTO[] = [];
+    let pathWithField = path;
+    pathWithField.push(field);
+    let objRemoved = objOld.filter(x=> !objCurrent.includes(x)); 
+
+    let objAdded = objCurrent.filter(x=> !objOld.includes(x));
+
+    objAdded.forEach(x=>{
+      changes.push(
+        FactoryChangeDTO.createAdded("", x, pathWithField)
+      );
+    });
+
+    objRemoved.forEach(x=>{
+      changes.push(
+        FactoryChangeDTO.createRemoved("", x, pathWithField)
+      );
+    })
 
     return changes;
   }

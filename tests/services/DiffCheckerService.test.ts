@@ -217,4 +217,105 @@ describe('testing diffCheckers file', () => {
     expect(result[0].path[0]).toBe('release');
     expect(result[0].path[1]).toBe('fee');
   });
+
+
+  test('field added item string in array', () => {
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+        campo: 'teste1',
+        release : {
+          fee: [
+            "teste1",
+            "teste2"
+          ]
+        }
+    };  
+
+    var objCurrente = {
+      campo: 'teste1',
+      release : {
+        fee: [
+          "teste1",
+          "teste2",
+          "teste3"
+        ]
+      }
+    };
+    let result = diff.getChangeDiff(objOld,objCurrente);
+    expect(result[0].valueOld).toBe(undefined);
+    expect(result[0].valueCurrent).toBe("teste3");
+    expect(result[0].path[0]).toBe('release');
+    expect(result[0].path[1]).toBe('fee');
+  });
+
+  test('field removed item string in array', () => {
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+        campo: 'teste1',
+        release : {
+          fee: [
+            "teste1",
+            "teste2",
+            "teste3"
+          ]
+        }
+    };  
+
+    var objCurrente = {
+      campo: 'teste1',
+      release : {
+        fee: [
+          "teste1",
+          "teste2"
+        ]
+      }
+    };
+    let result = diff.getChangeDiff(objOld,objCurrente);
+    expect(result[0].valueOld).toBe("teste3");
+    expect(result[0].valueCurrent).toBe(undefined);
+    expect(result[0].path[0]).toBe('release');
+    expect(result[0].path[1]).toBe('fee');
+  });
+  test('field edited item string in array', () => {
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+        campo: 'teste1',
+        release : {
+          fee: [
+            "teste1",
+            "teste2",
+            "teste3"
+          ]
+        }
+    };  
+
+    var objCurrente = {
+      campo: 'teste1',
+      release : {
+        fee: [
+          "teste1",
+          "teste2",
+          "teste4"
+        ]
+      }
+    };
+    let result = diff.getChangeDiff(objOld,objCurrente);
+    let itemAdded = result[0]
+    let itemRemoved = result[1]
+    expect(itemAdded.valueOld).toBe(undefined);
+    expect(itemAdded.valueCurrent).toBe("teste4");
+    expect(itemAdded.path[0]).toBe('release');
+    expect(itemAdded.path[1]).toBe('fee');
+
+    expect(itemRemoved.valueOld).toBe("teste3");
+    expect(itemRemoved.valueCurrent).toBe(undefined);
+    expect(itemRemoved.path[0]).toBe('release');
+    expect(itemRemoved.path[1]).toBe('fee');
+  });
 });
