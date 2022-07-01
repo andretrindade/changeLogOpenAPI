@@ -6,7 +6,7 @@ import DictionaryDTO from "../dtos/DictionaryDTO";
 export default class ChangeLogService{
 
 
-    public createChangeLog(change:ChangeDTO): ChangeLogDTO{
+    private createChangeLog(change:ChangeDTO): ChangeLogDTO{
 
         let description : string = "";
 
@@ -34,7 +34,7 @@ export default class ChangeLogService{
         return changeLog
     }
  
-    public getChangeLogWithParseDictionary(changes: ChangeDTO[]): ChangeLogDTO[]{
+    public getChangeLog(changes: ChangeDTO[]): ChangeLogDTO[]{
 
         let changeLogs : ChangeLogDTO[] = [];
         changes.forEach(change=>{
@@ -44,9 +44,5 @@ export default class ChangeLogService{
         });
 
         return changeLogs;
-
     }
-
-
-
 }
