@@ -6,52 +6,41 @@ import DictionaryDTO from "../dtos/DictionaryDTO";
 export default class ChangeLogService{
 
 
-    public createChangeLog(change:ChangeDTO, dictionary?: DictionaryDTO): ChangeLogDTO{
+    public createChangeLog(change:ChangeDTO): ChangeLogDTO{
 
         let description : string = "";
-        if(dictionary){
-            description = dictionary.description;
-            description = description.replace("{valorAntigo}", change.valueOld)
-            description = description.replace("{valorAtual}", change.valueCurrent)
-        }else{
+
             switch(change.typeChange){
-                case TypeChange.added : description = "Campo adicionado."
+                case TypeChange.added : description = `Campo '${change.field}' adicionado.`
                 break;
                 
-                case TypeChange.removed : description = "Campo removido."
+                case TypeChange.removed : description = `Campo '${change.field}' removido.`
                 break;
 
-                case TypeChange.edited : description = "Campo alterado"
+                case TypeChange.edited : description = `Campo '${change.field}' alterado de '${change.valueOld}' para '${change.valueCurrent}'`
                 break;
             }
-        }
+ 
 
         let changeLog : ChangeLogDTO = 
         {
             change : change, 
-            dictionary : dictionary,
             description : description,
             path : change.path.join('/'), 
-            api : change.field
+            field : change.field
 
         }
 
         return changeLog
     }
  
-    public getChangeLogWithParseDictionary(changes: ChangeDTO[], dictonaries:DictionaryDTO[]): ChangeLogDTO[]{
+    public getChangeLogWithParseDictionary(changes: ChangeDTO[]): ChangeLogDTO[]{
 
         let changeLogs : ChangeLogDTO[] = [];
         changes.forEach(change=>{
 
-            let dics = dictonaries
-                .filter(dic=> dic.field === change.field 
-                                &&  dic.typeChange === change.typeChange);
-            
-            if(dics.length > 0){
-                changeLogs.push(this.createChangeLog(change, dics[0]));
-            }
-                                
+            changeLogs.push(this.createChangeLog(change));
+                            
         });
 
         return changeLogs;
