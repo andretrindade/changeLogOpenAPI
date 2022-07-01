@@ -59,7 +59,11 @@ export default class DiffCheckerService {
         let valueCurrent = objCurrent[fieldCurrent];
 
         if (Array.isArray(valueCurrent) && typeof valueCurrent[0] !== 'object') {
-          changes.push(...this.getChangeDiffArray(fieldCurrent,valueOld,valueCurrent,path))
+          let changesWithObjecArray = this.getChangeDiffArray(fieldCurrent,valueOld,valueCurrent,path)
+          if(changesWithObjecArray){
+            changes.push(...changesWithObjecArray);
+            path.pop();
+          }
 
         }else{
 
