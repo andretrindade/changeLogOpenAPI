@@ -1,4 +1,4 @@
-import DiffChecker from "../../src/services/DiffChecker"; 
+import DiffChecker from "../../src/services/DiffCheckerService"; 
 
 describe('testing diffCheckers file', () => {
   test('field edited', () => {
@@ -187,6 +187,45 @@ describe('testing diffCheckers file', () => {
     expect(result[0].valueOld).toBe("saque coberto");
     expect(result[0].valueCurrent).toBe("saque a desberto");
     expect(result[0].path[0]).toBe('fee');
+  });
+
+
+  test('field edited with array and more path', () => {
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+        fee: [{
+          feeAmount : 12.33,
+          feeName : 'saque coberto'
+        }],
+        component :{
+          name : "andre",
+          address:
+          {
+            number: 2
+          }
+        }
+    };  
+
+    
+
+    var objCurrente = {
+      fee: [{
+        feeAmount : 12.33,
+        feeName : 'saque coberto'
+      }],
+      component :{
+        name : "andre",
+        address:
+        {
+          number: 3
+        }
+      }
+    };
+    let result = diff.getChangeDiff(objOld,objCurrente);
+    expect(result[0].path[0]).toBe('component');
+    expect(result[0].path[1]).toBe('address');
   });
 
   test('field removed with array', () => {

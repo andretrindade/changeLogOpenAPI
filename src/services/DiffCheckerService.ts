@@ -1,7 +1,7 @@
 import ChangeDTO from "../dtos/ChangeDTO";
-import FactoryChangeDTO from "./FactoryChangeDTO";
+import FactoryChangeDTO from "../dtos/FactoryChangeDTO";
 
-export default class DiffChecker {
+export default class DiffCheckerService {
 
 
 
@@ -10,7 +10,7 @@ export default class DiffChecker {
     return changes;
   }
 
-  public diff(objOld: any, objCurrent: any, path?: string[]): ChangeDTO[] {
+  private diff(objOld: any, objCurrent: any, path?: string[]): ChangeDTO[] {
     var typeOld = typeof objOld;
     var typeCurrent = typeof objCurrent;
     path = path || [];
@@ -22,7 +22,6 @@ export default class DiffChecker {
     changes.push(...this.getFieldEditedOrRemoved(objOld, objCurrent, path));
 
     changes.push(...this.getFieldAdded(objOld, objCurrent, path));
-
 
     return changes;
   }
@@ -72,6 +71,7 @@ export default class DiffChecker {
           if (typeof valueCurrent == 'object') {
             path.push(fieldCurrent);
             changes.push(...this.diff(valueOld, valueCurrent, path));
+            path.pop();
           } else
             if (valueOld !== valueCurrent) {
               objChange = FactoryChangeDTO.createEdited(fieldOld, valueOld, valueCurrent, path)
@@ -80,7 +80,8 @@ export default class DiffChecker {
       }
       // was removed
       else {
-        objChange = FactoryChangeDTO.createRemoved(fieldOld, valueOld, path)
+        objChange = FactoryChangeDTO.createRemoved(fieldOld, valueOld, path);
+
       }
 
       if (objChange) {
@@ -101,13 +102,13 @@ export default class DiffChecker {
 
     objAdded.forEach(x=>{
       changes.push(
-        FactoryChangeDTO.createAdded("", x, pathWithField)
+        FactoryChangeDTO.createAdded(x.toString(), x, pathWithField)
       );
     });
 
     objRemoved.forEach(x=>{
       changes.push(
-        FactoryChangeDTO.createRemoved("", x, pathWithField)
+        FactoryChangeDTO.createRemoved(x.toString(), x, pathWithField)
       );
     })
 
