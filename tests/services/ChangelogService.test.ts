@@ -57,33 +57,4 @@ describe('testing changeLogService file', () => {
     expect(result[0].description).toBe("Campo 'maxItem' adicionado.");
     expect(result[0].path).toBe('release');
   });
-
-  // test('field edited with subField', () => {
-
-  //   const changeLogService = new ChangeLogService();
-
-  //   const diff = new DiffChecker();
-
-  //   var objOld = {
-  //     release: {
-  //       amount: 123
-  //     }
-  //   };
-
-  //   var objCurrente = {
-  //     release: {
-  //       amount: 12.00
-  //     }
-  //   };
-
-  //   let changes = diff.getChangeDiff(objOld, objCurrente);
-
-  //   let dicionaries: DictionaryDTO[] = [
-  //     { description: 'Pattern alterado de {valorAntigo} para {valorAtual}', field: 'pattern', typeChange: TypeChange.edited }]
-
-  //   let result = changeLogService.getChangeLogWithParseDictionary(changes, dicionaries);
-
-  //   expect(result[0].description).toBe('Pattern alterado de \[w*] para /[w/W/s]*');
-  //   expect(result[0].path).toBe('');
-  // });
 });
