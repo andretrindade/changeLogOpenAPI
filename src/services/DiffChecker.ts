@@ -58,7 +58,11 @@ export default class DiffChecker {
       // was edited
       if (fieldCurrent !== undefined) {
         let valueCurrent = objCurrent[fieldCurrent];
-        if(typeof valueCurrent == 'object'){
+        if(Array.isArray(valueCurrent)){
+          valueCurrent = valueCurrent[0];
+          valueOld = valueOld[0];
+        }
+        if(typeof valueCurrent == 'object'){        
           path.push(fieldCurrent);
           changes.push(...this.diff(valueOld, valueCurrent, path));
         }else
