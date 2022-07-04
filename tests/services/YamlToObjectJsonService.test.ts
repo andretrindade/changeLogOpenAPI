@@ -1,12 +1,16 @@
 
-import YamlToObjectJsonService from "../../src/services/YamlToObjectJsonService";
+import SwaggerPreparationDataService from "../../src/services/SwaggerPreparationDataService";
 
 describe('testing yamlToObjectJsonService file', () => {
   test('read yaml from file', () => {
 
-    const changeLogService = new YamlToObjectJsonService();
-    let result = changeLogService.convert("./documents/yaml-OpenAPI/teste.yaml");
-    expect(result.components.parameters.accountId.name).toBe('accountId');
+    let obj = {campo1: 123, cammpo2:123, components: 222 };
+
+    expect(obj.components).toBe(222);
+
+
+    let result = SwaggerPreparationDataService.Prepare(obj);
+    expect(result.components).toBe(undefined);
 
 
   });

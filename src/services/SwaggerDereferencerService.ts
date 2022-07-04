@@ -5,20 +5,21 @@ export default class SwaggerDereferencerService {
 
     /**
      * @param files Lista de arquivos para serem desreferenciados
-     * @param outputType Formato de saída, pode ser json ou yaml
      */
-    public static dereferenceFiles(files: String[], outputType: String): void {
+    public static async dereferenceFile(file: String): Promise<any> {
 
-        files.forEach(file => {
+        const filePath = file.slice(0, file.lastIndexOf("/"))
 
-            const filePath = file.slice(0, file.lastIndexOf("/"))
+        const fileName = file.slice(file.lastIndexOf("/") + 1, file.length - 5)
 
-            outputType = outputType == "yaml" ? "yaml" : "json"
-            const fileName = file.slice(file.lastIndexOf("/") + 1, file.length - 5)
+        let objJson = {}
+        try {
+            const objStringJson = await swaggerCli.bundle(file, { dereference: true, type: "json" })
+            objJson = JSON.parse(objStringJson);
+        } catch (error) {
+            console.log(error)
+        }
 
-            const outputFilePath = filePath + "/dereferenced_files/" + fileName + "." + outputType
-
-            swaggerCli.bundle(file, { dereference: true, outfile: outputFilePath, type: outputType })
-        });
+        return objJson;
     }
 }
