@@ -27,8 +27,8 @@ describe('testing changeLogService file', () => {
 
     let result = changeLogService.getChangeLog(changes);
 
-    expect(result[0].description).toBe("Campo 'pattern' alterado de '\[w*]' para '/[w/W/s]*'");
-    expect(result[0].path).toBe('release');
+    expect(result["release"][0].description).toBe("Campo 'pattern' alterado de '\[w*]' para '/[w/W/s]*'");
+    expect(result["release"][0].path).toBe('release');
   });
 
   test('field added with subField', () => {
@@ -54,7 +54,7 @@ describe('testing changeLogService file', () => {
 
     let result = changeLogService.getChangeLog(changes);
 
-    expect(result[0].description).toBe("Campo 'maxItem' adicionado.");
-    expect(result[0].path).toBe('release');
+    expect(result["release"][0].description).toBe("Campo 'maxItem' adicionado.");
+    expect(result["release"][0].path).toBe('release');
   });
 });
