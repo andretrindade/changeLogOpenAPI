@@ -5,21 +5,26 @@ import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpoin
 
 export default class ChangeLogService{
 
+    private addCustomDescriptionOfChangeDTO(change:ChangeDTO): string{
+        let description : string = "";
+
+        switch(change.typeChange){
+            case TypeChange.added : description = `Campo '${change.field}' adicionado.`
+            break;
+            
+            case TypeChange.removed : description = `Campo '${change.field}' removido.`
+            break;
+
+            case TypeChange.edited : description = `Campo '${change.field}' alterado de '${change.valueOld}' para '${change.valueCurrent}'`
+            break;
+        }
+
+        return description;
+    }
 
     private createChangeLog(change:ChangeDTO): ChangeLogDTO{
 
-        let description : string = "";
-
-            switch(change.typeChange){
-                case TypeChange.added : description = `Campo '${change.field}' adicionado.`
-                break;
-                
-                case TypeChange.removed : description = `Campo '${change.field}' removido.`
-                break;
-
-                case TypeChange.edited : description = `Campo '${change.field}' alterado de '${change.valueOld}' para '${change.valueCurrent}'`
-                break;
-            }
+        let description = this.addCustomDescriptionOfChangeDTO(change);
 
         let changeLog : ChangeLogDTO = 
         {
