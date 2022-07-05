@@ -1,35 +1,19 @@
 import { Workbook } from 'excel4node'
 import * as fs from 'fs';
-import ChangeLogDTO from '../dtos/ChangeLogDTO';
-import ChangeLogSeparatePerEndpointDTO from '../dtos/ChangeLogSeparatePerEndpointDTO';
+import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
 
 export default class SheetGeneratorService {
 
-    public generate(data: ChangeLogSeparatePerEndpointDTO, fileName: String) {
+
+    public generate(changes: ChangeLogViewOutputDTO[], fileName: String) {
+
+
         const wb = new Workbook();
         const ws = wb.addWorksheet('CHANGELOG');
 
-        let models = []
-
-        const keys = Object.getOwnPropertyNames(data);
-
-        keys.forEach(key => {
-
-            data[key].forEach(value => {
-                let model = new OutputModel()
-                let path =  value.change.path.join("/").replace(key, "")
-                model.endpoint = key.replace("paths//", "")
-                model.path = path
-                model.field = value.field
-                model.change = value.description
-
-                models.push(model)
-            })
-        })
-
         this.createHeader(ws)
 
-        this.fillWorksheet(models, ws)
+        this.fillWorksheet(changes, ws)
 
         const path = "output"
         if (!fs.existsSync(path)) {
@@ -41,7 +25,7 @@ export default class SheetGeneratorService {
     private createHeader(ws: any) {
         const headingColumnNames = [
             "ENDPOINT",
-            "PATH",
+            "CAMINHO",
             "CAMPO",
             "ALTERAÇÃO"
         ]
@@ -65,13 +49,6 @@ export default class SheetGeneratorService {
             rowIndex++;
         });
     }
-}
-
-class OutputModel {
-    endpoint: String
-    field: String
-    change: String
-    path:String
 }
 
 enum COLUMNINDEX {
