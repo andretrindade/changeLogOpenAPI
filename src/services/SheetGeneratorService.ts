@@ -2,10 +2,38 @@ import { Workbook } from 'excel4node'
 import * as fs from 'fs';
 import ChangeLogDTO from '../dtos/ChangeLogDTO';
 import ChangeLogSeparatePerEndpointDTO from '../dtos/ChangeLogSeparatePerEndpointDTO';
+import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
 
 export default class SheetGeneratorService {
 
-    public generate(data: ChangeLogSeparatePerEndpointDTO, fileName: String) {
+    private  SEPARATOR_CSV : string = ";";
+    private getHeader():string{
+
+        const headingColumnNames = [
+            "ENDPOINT",
+            "PATH",
+            "CAMPO",
+            "ALTERAÇÃO"
+        ]
+
+        let header = headingColumnNames.reduce(x => x +this.SEPARATOR_CSV);
+
+        return header;
+    }
+
+    public body(changes: ChangeLogViewOutputDTO): String{
+
+        return changes.;
+    }
+
+    public generate(changes: ChangeLogViewOutputDTO[], fileName: String) {
+
+
+        const header = this.getHeader();
+
+        let body = changes.map(x=>body(x));
+
+
         const wb = new Workbook();
         const ws = wb.addWorksheet('CHANGELOG');
 
@@ -15,7 +43,7 @@ export default class SheetGeneratorService {
 
         keys.forEach(key => {
 
-            data[key].forEach(value => {
+            changes[key].forEach(value => {
                 let model = new OutputModel()
                 let path =  value.change.path.join("/").replace(key, "")
                 model.endpoint = key.replace("paths//", "")
@@ -39,12 +67,7 @@ export default class SheetGeneratorService {
     }
 
     private createHeader(ws: any) {
-        const headingColumnNames = [
-            "ENDPOINT",
-            "PATH",
-            "CAMPO",
-            "ALTERAÇÃO"
-        ]
+
 
         let headingColumnIndex = 1;
         headingColumnNames.forEach(heading => {
