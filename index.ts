@@ -6,8 +6,8 @@ import SheetGeneratorService from "./src/services/SheetGeneratorService";
 import VersionCompareService from "./src/services/VersionCompareService";
 
 
-let fileOld = "./tests/documents/yaml-OpenAPI/dereferenced_files/old.json";
-let fileCurrent = "./tests/documents/yaml-OpenAPI/dereferenced_files/current.json";
+let fileOld = "./documents/unnaranged/1.0.4.yaml";
+let fileCurrent = "./documents/unnaranged/2.0.0.yaml";
 
 const versionCompareService = new VersionCompareService();
 let result = versionCompareService

@@ -17,8 +17,9 @@ export default class SheetGeneratorService {
 
             data[key].forEach(value => {
                 let model = new OutputModel()
-
-                model.endpoint = key
+                let path =  value.change.path.join("/").replace(key, "")
+                model.endpoint = key.replace("paths//", "")
+                model.path = path
                 model.field = value.field
                 model.change = value.description
 
@@ -39,8 +40,8 @@ export default class SheetGeneratorService {
 
     private createHeader(ws: any) {
         const headingColumnNames = [
-            "API",
             "ENDPOINT",
+            "PATH",
             "CAMPO",
             "ALTERAÇÃO"
         ]
@@ -70,11 +71,12 @@ class OutputModel {
     endpoint: String
     field: String
     change: String
+    path:String
 }
 
 enum COLUMNINDEX {
-    "API" = 1,
-    "ENDPOINT" = 2,
+    "ENDPOINT" = 1,
+    "PATH" = 2,
     "FIELD" = 3,
     "CHANGE" = 4
 }
