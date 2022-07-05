@@ -1,4 +1,5 @@
 import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpointDTO";
+import ChangeLogViewOutputDTO from "../dtos/ChangeLogViewOutputDTO";
 import ChangeLogService from "./ChangeLogService";
 import DiffCheckerService from "./DiffCheckerService";
 import FormattingChangeService from "./FormattingChangeService";
@@ -18,7 +19,7 @@ export default class VersionCompareService {
         this._formattingChangeService = new FormattingChangeService();
     }
     
-    public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogSeparatePerEndpointDTO> {
+    public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
 
         let objOld = await  SwaggerDereferencerService.dereferenceFile(fileOld);
         let objCurrent = await SwaggerDereferencerService.dereferenceFile(fileCurrent);
@@ -31,7 +32,7 @@ export default class VersionCompareService {
         
         let changesView = this._formattingChangeService.formatting(changeLogs);
 
-        return changeLogs;
+        return changesView;
     }
 
 }

@@ -1,7 +1,8 @@
 import { TypeChange } from "../constants/Constant"
 
 export default class ChangeLogViewOutputDTO{
-    public field: string 
-    public typeChange : TypeChange
-    public description : string 
+    public endpoint: String
+    public field: String
+    public change: String
+    public path:String
 }

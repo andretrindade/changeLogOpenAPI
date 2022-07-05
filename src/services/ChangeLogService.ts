@@ -33,7 +33,7 @@ export default class ChangeLogService{
         return changeLog
     }
  
-    public getChangeLog(changes: ChangeDTO[]): ChangeLogSeparatePerEndpointDTO {
+    public getChangeLog(changes: ChangeDTO[]): ChangeLogSeparatePerEndpointDTO[] {
 
         let changeLogs: ChangeLogDTO[] = [];
         changes.forEach(change => {
@@ -47,9 +47,9 @@ export default class ChangeLogService{
         return changeLogsPerEndpoint;
     }
 
-    public separateChangeLogPerEndpoint(changes: ChangeLogDTO[]): ChangeLogSeparatePerEndpointDTO {
+    public separateChangeLogPerEndpoint(changes: ChangeLogDTO[]): ChangeLogSeparatePerEndpointDTO[] {
         
-        let changeLogResponse: ChangeLogSeparatePerEndpointDTO = {};
+        let changeLogSpeDTOList: ChangeLogSeparatePerEndpointDTO[] = [];
 
         let endpoints = new Set();
         changes.map(changeLog => {
@@ -63,22 +63,24 @@ export default class ChangeLogService{
 
                 if(endpoint === changeLog.path) {
                     let formatEndpoint = this.formatEndpoint(endpoint); // format before checks logs
-
-                    if(changeLogResponse[formatEndpoint]) {
-
-                        let changesLogEndpoint = changeLogResponse[formatEndpoint]; // recovering and storing logs
-                        changesLogEndpoint.push(changeLog);
+                   
+                    if(changeLogSpeDTOList.filter(x=> x.endpoint == formatEndpoint).length !== 0) {
+                        
+                        changeLogSpeDTOList.filter(x=> x.endpoint == formatEndpoint)[0].changeLogs.push(changeLog) // recovering and storing logs
                     
                     } else {
-                        
-                        let changesLogEndpoint = changeLogResponse[formatEndpoint] = []; // new storing endpoint
-                        changesLogEndpoint.push(changeLog);
+                        let changeLogSpeDTO: ChangeLogSeparatePerEndpointDTO = 
+                        {
+                            endpoint : formatEndpoint,
+                            changeLogs : [changeLog]
+                        }
+                        changeLogSpeDTOList.push(changeLogSpeDTO)
                     }
                 }
             });
         });
 
-        return changeLogResponse;
+        return changeLogSpeDTOList;
     }
 
     private formatEndpoint(path: string): string {
