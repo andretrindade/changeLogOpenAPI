@@ -1,4 +1,5 @@
 import ChangeLogDTO from "../dtos/ChangeLogDTO";
+import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpointDTO";
 import ChangeLogService from "./ChangeLogService";
 import DiffCheckerService from "./DiffCheckerService";
 import SwaggerDereferencerService from "./SwaggerDereferencerService";
@@ -19,7 +20,7 @@ export default class VersionCompareService {
         this._yamlToObjectJsonService = new YamlToObjectJsonService();;
     }
     
-    public async compare(fileOld: string, fileCurrent: string):Promise<ChangeLogDTO[]> {
+    public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogSeparatePerEndpointDTO> {
 
         let objOld = await  SwaggerDereferencerService.dereferenceFile(fileOld);
         let objCurrent = await SwaggerDereferencerService.dereferenceFile(fileCurrent);

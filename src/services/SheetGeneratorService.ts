@@ -1,24 +1,29 @@
 import { Workbook } from 'excel4node'
 import * as fs from 'fs';
 import ChangeLogDTO from '../dtos/ChangeLogDTO';
+import ChangeLogSeparatePerEndpointDTO from '../dtos/ChangeLogSeparatePerEndpointDTO';
 
 export default class SheetGeneratorService {
 
-    public generate(data: ChangeLogDTO[], fileName: String) {
+    public generate(data: ChangeLogSeparatePerEndpointDTO, fileName: String) {
         const wb = new Workbook();
         const ws = wb.addWorksheet('CHANGELOG');
 
         let models = []
 
-        data.forEach(value => {
-            let model = new Model()
+        const keys = Object.getOwnPropertyNames(data);
 
-            model.api = "API name"
-            model.endpoint = value.path
-            model.field = value.field
-            model.change = value.description
+        keys.forEach(key => {
 
-            models.push(model)
+            data[key].forEach(value => {
+                let model = new OutputModel()
+
+                model.endpoint = key
+                model.field = value.field
+                model.change = value.description
+
+                models.push(model)
+            })
         })
 
         this.createHeader(ws)
@@ -61,8 +66,7 @@ export default class SheetGeneratorService {
     }
 }
 
-class Model {
-    api: String
+class OutputModel {
     endpoint: String
     field: String
     change: String
