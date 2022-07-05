@@ -26,11 +26,13 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrente);
 
     let result = changeLogService.getChangeLog(changes);
-
-    expect(result["release"][0].description).toBe("Campo 'pattern' alterado de '\[w*]' para '/[w/W/s]*'");
+end
+    expect(result.["release"][0].description).toBe("Campo 'pattern' alterado de '\[w*]' para '/[w/W/s]*'");
     expect(result["release"][0].path).toBe('release');
   });
 
+
+  
   test('field added with subField', () => {
 
     const changeLogService = new ChangeLogService();
