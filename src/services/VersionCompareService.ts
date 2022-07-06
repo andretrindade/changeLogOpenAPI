@@ -10,9 +10,7 @@ export default class VersionCompareService {
     private _changeLogService: ChangeLogService;
     private _diffCheckerService: DiffCheckerService;
     private _formattingChangeService : FormattingChangeService;
-    /**
-     *
-     */
+
     constructor() {
         this._changeLogService = new ChangeLogService();
         this._diffCheckerService = new DiffCheckerService();

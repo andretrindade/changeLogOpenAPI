@@ -9,11 +9,10 @@ export default class FormattingChangeService{
             changePerEndPoint.changeLogs.forEach(change=>{
 
             let changeLogViewOutputDto : ChangeLogViewOutputDTO = {
-                 endpoint: changePerEndPoint.endpoint.replace("paths//", ""),
+                 endpoint: changePerEndPoint.endpoint,
                  field: this.replaceWord(change.field),
-                 change:  change.description,
-                 path: change.change.path.join("/").replace(changePerEndPoint.endpoint, "")
-
+                 description:  change.description.join("; "),
+                 path: this.replaceWord(change.path.replace(changePerEndPoint.endpoint, ""))
             };
             changeLogViewOutputList.push(changeLogViewOutputDto);
 
@@ -24,18 +23,20 @@ export default class FormattingChangeService{
         
     }
 
-    public replaceWord(description : string): string{
+    public replaceWord(text : string): string{
         let lstReplace = this.wordsForRemove();
         lstReplace.forEach(x=>{
-            description = description.replace(x.from, x.to);
+            text = text.split(x.from).join(x.to);
         })
-
-        return description;
+        return text
     }
 
     public wordsForRemove(): any []{
         let lst : any[] = [
-            {from: "content/application/json; charset=utf-8", to : ""}]
+            {from: "content/application/json; charset=utf-8", to : ""},
+            {from:"/properties", to:""},
+            {from :"application/json/", to:""}
+        ]
 
 
     return lst;
