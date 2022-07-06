@@ -85,8 +85,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftContractList'
       security:
         - OpenId:
             - openid
@@ -355,10 +353,10 @@ components:
       properties:
         contractId:
           type: string
-          maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-          description: Um identificador único e imutável usado para identificar o contrato de uma operação de crédito. Este identificador não tem significado para o tomador do crédito
-          example: xcjklompowsa279212650822221989319aadrtjk
+          maxLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}@$'
+          description: Um@ identificador único e imutável usado para identificar o contrato de uma operação de crédito. Este identificador não tem significado para o tomador do crédito
+          example: xc650822221989319aadrtjk
         brandName:
           type: string
           maxLength: 80
@@ -558,7 +556,6 @@ components:
         - SEGURO_RURAL
         - TRIBUTOS_RECEITAS_ORCAMENTARIAS
         - VEICULOS
-        - Lucas
         - VEICULOS_AUTOMOTORES
       example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO
     EnumWarrantyType:

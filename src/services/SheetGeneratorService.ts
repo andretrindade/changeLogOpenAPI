@@ -55,5 +55,5 @@ enum COLUMNINDEX {
     "ENDPOINT" = 1,
     "PATH" = 2,
     "FIELD" = 3,
-    "CHANGE" = 4
+    "DESCRIPTION" = 4
 }

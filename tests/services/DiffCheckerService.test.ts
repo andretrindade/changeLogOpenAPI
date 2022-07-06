@@ -1,4 +1,5 @@
-import DiffChecker from "../../src/services/DiffCheckerService"; 
+import ChangeDTO from "../../src/dtos/ChangeDTO";
+import DiffChecker from "../../src/services/DiffCheckerService";
 
 describe('testing diffCheckers file', () => {
   test('field edited', () => {
@@ -6,17 +7,17 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1'
-    };  
+      campo: 'teste1'
+    };
 
     var objCurrente = {
-        campo: 'teste2'
+      campo: 'teste2'
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
 
-      expect(result[0].valueCurrent).toBe('teste2');
-      expect(result[0].valueOld).toBe('teste1');
-      expect(result[0].path.length).toBe(0);
+    expect(result[0].valueCurrent).toBe('teste2');
+    expect(result[0].valueOld).toBe('teste1');
+    expect(result[0].path.length).toBe(0);
 
   });
 
@@ -25,18 +26,18 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1'
-    };  
+      campo: 'teste1'
+    };
 
     var objCurrente = {
-        campo: 'teste1',
-        nome: 'andre'
+      campo: 'teste1',
+      nome: 'andre'
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
 
-      expect(result[0].valueCurrent).toBe('andre');
-      expect(result[0].valueOld).toBe(undefined);
-      expect(result[0].path.length).toBe(0);
+    expect(result[0].valueCurrent).toBe('andre');
+    expect(result[0].valueOld).toBe(undefined);
+    expect(result[0].path.length).toBe(0);
 
   });
 
@@ -45,18 +46,18 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        amount : 123
-    };  
+      campo: 'teste1',
+      amount: 123
+    };
 
     var objCurrente = {
-        campo: 'teste1'
+      campo: 'teste1'
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
 
-      expect(result[0].valueCurrent).toBe(undefined);
-      expect(result[0].valueOld).toBe(123);
-      expect(result[0].path.length).toBe(0);
+    expect(result[0].valueCurrent).toBe(undefined);
+    expect(result[0].valueOld).toBe(123);
+    expect(result[0].path.length).toBe(0);
   });
 
   test('field edited with subField', () => {
@@ -64,21 +65,21 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        fee: {
-          feeName : 'saque coberto'
-        }
-    };  
+      campo: 'teste1',
+      fee: {
+        feeName: 'saque coberto'
+      }
+    };
 
-    
+
 
     var objCurrente = {
       campo: 'teste1',
       fee: {
-        feeName : 'saque a descoberto'
+        feeName: 'saque a descoberto'
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe('saque coberto');
     expect(result[0].valueCurrent).toBe('saque a descoberto');
     expect(result[0].path[0]).toBe('fee');
@@ -89,22 +90,22 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        fee: {
-          feeAmount : 12.33,
-          feeName : 'saque coberto'
-        }
-    };  
+      campo: 'teste1',
+      fee: {
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
+      }
+    };
 
-    
+
 
     var objCurrente = {
       campo: 'teste1',
       fee: {
-        feeName : 'saque coberto'
+        feeName: 'saque coberto'
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(12.33);
     expect(result[0].valueCurrent).toBe(undefined);
     expect(result[0].path[0]).toBe('fee');
@@ -115,22 +116,22 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        fee: {
-          feeName : 'saque coberto'
-        }
-    };  
+      campo: 'teste1',
+      fee: {
+        feeName: 'saque coberto'
+      }
+    };
 
-    
+
 
     var objCurrente = {
       campo: 'teste1',
       fee: {
-        feeAmount : 12.33,
-        feeName : 'saque coberto'
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(undefined);
     expect(result[0].valueCurrent).toBe(12.33);
     expect(result[0].path[0]).toBe('fee');
@@ -141,22 +142,22 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        fee: [{
-          feeName : 'saque coberto'
-        }]
-    };  
+      campo: 'teste1',
+      fee: [{
+        feeName: 'saque coberto'
+      }]
+    };
 
-    
+
 
     var objCurrente = {
       campo: 'teste1',
       fee: [{
-        feeAmount : 12.33,
-        feeName : 'saque coberto'
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
       }]
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(undefined);
     expect(result[0].valueCurrent).toBe(12.33);
     expect(result[0].path[0]).toBe('fee');
@@ -167,23 +168,23 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        fee: [{
-          feeAmount : 12.33,
-          feeName : 'saque coberto'
-        }]
-    };  
+      campo: 'teste1',
+      fee: [{
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
+      }]
+    };
 
-    
+
 
     var objCurrente = {
       campo: 'teste1',
       fee: [{
-        feeAmount : 12.33,
-        feeName : 'saque a desberto'
+        feeAmount: 12.33,
+        feeName: 'saque a desberto'
       }]
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe("saque coberto");
     expect(result[0].valueCurrent).toBe("saque a desberto");
     expect(result[0].path[0]).toBe('fee');
@@ -195,35 +196,35 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        fee: [{
-          feeAmount : 12.33,
-          feeName : 'saque coberto'
-        }],
-        component :{
-          name : "andre",
-          address:
-          {
-            number: 2
-          }
+      fee: [{
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
+      }],
+      component: {
+        name: "andre",
+        address:
+        {
+          number: 2
         }
-    };  
+      }
+    };
 
-    
+
 
     var objCurrente = {
       fee: [{
-        feeAmount : 12.33,
-        feeName : 'saque coberto'
+        feeAmount: 12.33,
+        feeName: 'saque coberto'
       }],
-      component :{
-        name : "andre",
+      component: {
+        name: "andre",
         address:
         {
           number: 3
         }
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].path[0]).toBe('component');
     expect(result[0].path[1]).toBe('address');
   });
@@ -233,24 +234,24 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        release : {
-          fee: [{
-            feeAmount : 12.33,
-            feeName : 'saque coberto'
-          }]
-        }
-    };  
+      campo: 'teste1',
+      release: {
+        fee: [{
+          feeAmount: 12.33,
+          feeName: 'saque coberto'
+        }]
+      }
+    };
 
     var objCurrente = {
       campo: 'teste1',
-      release : {
+      release: {
         fee: [{
-        feeName : 'saque a desberto'
-       } ]
+          feeName: 'saque a desberto'
+        }]
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(12.33);
     expect(result[0].valueCurrent).toBe(undefined);
     expect(result[0].path[0]).toBe('release');
@@ -263,18 +264,18 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        release : {
-          fee: [
-            "teste1",
-            "teste2"
-          ]
-        }
-    };  
+      campo: 'teste1',
+      release: {
+        fee: [
+          "teste1",
+          "teste2"
+        ]
+      }
+    };
 
     var objCurrente = {
       campo: 'teste1',
-      release : {
+      release: {
         fee: [
           "teste1",
           "teste2",
@@ -282,7 +283,7 @@ describe('testing diffCheckers file', () => {
         ]
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(undefined);
     expect(result[0].valueCurrent).toBe("teste3");
     expect(result[0].path[0]).toBe('release');
@@ -294,26 +295,26 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        release : {
-          fee: [
-            "teste1",
-            "teste2",
-            "teste3"
-          ]
-        }
-    };  
+      campo: 'teste1',
+      release: {
+        fee: [
+          "teste1",
+          "teste2",
+          "teste3"
+        ]
+      }
+    };
 
     var objCurrente = {
       campo: 'teste1',
-      release : {
+      release: {
         fee: [
           "teste1",
           "teste2"
         ]
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe("teste3");
     expect(result[0].valueCurrent).toBe(undefined);
     expect(result[0].path[0]).toBe('release');
@@ -324,19 +325,19 @@ describe('testing diffCheckers file', () => {
     const diff = new DiffChecker();
 
     var objOld = {
-        campo: 'teste1',
-        release : {
-          fee: [
-            "teste1",
-            "teste2",
-            "teste3"
-          ]
-        }
-    };  
+      campo: 'teste1',
+      release: {
+        fee: [
+          "teste1",
+          "teste2",
+          "teste3"
+        ]
+      }
+    };
 
     var objCurrente = {
       campo: 'teste1',
-      release : {
+      release: {
         fee: [
           "teste1",
           "teste2",
@@ -344,7 +345,7 @@ describe('testing diffCheckers file', () => {
         ]
       }
     };
-    let result = diff.getChangeDiff(objOld,objCurrente);
+    let result = diff.getChangeDiff(objOld, objCurrente);
     let itemAdded = result[0]
     let itemRemoved = result[1]
     expect(itemAdded.valueOld).toBe(undefined);
@@ -359,7 +360,29 @@ describe('testing diffCheckers file', () => {
   });
 
 
+  test('field edited item string in array', () => {
 
+    const diff = new DiffChecker();
 
+    let changes : ChangeDTO[] = [{
+       path: ["path/contratoId/get/shema/meta/totalRecords"] ,
+       typeChange : 1,
+       field : "string" ,
+       valueOld :"string",
+       valueCurrent :"string"
+  }]
 
+    let result = diff.groupFieldChangeDiff(changes);
+    let itemAdded = result[0]
+    let itemRemoved = result[1]
+    expect(itemAdded.valueOld).toBe(undefined);
+    expect(itemAdded.valueCurrent).toBe("teste4");
+    expect(itemAdded.path[0]).toBe('release');
+    expect(itemAdded.path[1]).toBe('fee');
+
+    expect(itemRemoved.valueOld).toBe("teste3");
+    expect(itemRemoved.valueCurrent).toBe(undefined);
+    expect(itemRemoved.path[0]).toBe('release');
+    expect(itemRemoved.path[1]).toBe('fee');
+  });
 });

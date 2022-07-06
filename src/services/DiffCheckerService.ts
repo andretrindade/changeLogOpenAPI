@@ -10,15 +10,13 @@ export default class DiffCheckerService {
     return changes;
   }
 
+  public groupFieldChangeDiff(changes: ChangeDTO[]): ChangeDTO[] {
+    return null;
+  }
+
   private diff(objOld: any, objCurrent: any, path?: string[]): ChangeDTO[] {
-    var typeOld = typeof objOld;
-    var typeCurrent = typeof objCurrent;
     path = path || [];
-    var fieldsOld = Object.getOwnPropertyNames(objOld);
-    var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
     let changes: ChangeDTO[] = [];
-
-
     changes.push(...this.getFieldEditedOrRemoved(objOld, objCurrent, path));
 
     changes.push(...this.getFieldAdded(objOld, objCurrent, path));
@@ -59,13 +57,12 @@ export default class DiffCheckerService {
         let valueCurrent = objCurrent[fieldCurrent];
 
         if (Array.isArray(valueCurrent) && typeof valueCurrent[0] !== 'object') {
-          let changesWithObjecArray = this.getChangeDiffArray(fieldCurrent,valueOld,valueCurrent,path)
-          if(changesWithObjecArray){
-            changes.push(...changesWithObjecArray);
-            path.pop();
-          }
+          path.push(fieldCurrent);
+          let changesWithObjecArray = this.getChangeDiffArray(fieldCurrent, valueOld, valueCurrent, path)
+          changes.push(...changesWithObjecArray);
+          path.pop();
 
-        }else{
+        } else {
 
           if (Array.isArray(valueCurrent) && typeof valueCurrent[0] == 'object') {
 
@@ -96,26 +93,38 @@ export default class DiffCheckerService {
     return changes;
   }
 
-  public getChangeDiffArray(field : string,objOld : object[], objCurrent : object[], path : string[]):ChangeDTO[]{
+  public getChangeDiffArray(field: string, objOld: object[], objCurrent: object[], path: string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     let pathWithField = path;
-    pathWithField.push(field);
-    let objRemoved = objOld.filter(x=> !objCurrent.includes(x)); 
+    // pathWithField.push(field);
+    let objRemoved = objOld.filter(x => !objCurrent.includes(x));
 
-    let objAdded = objCurrent.filter(x=> !objOld.includes(x));
+    let objAdded = objCurrent.filter(x => !objOld.includes(x));
 
-    objAdded.forEach(x=>{
+    objAdded.forEach((x: any) => {
+      let element = this.getCustomArrayFieldChange(field, pathWithField, x);
       changes.push(
-        FactoryChangeDTO.createAdded(x.toString(), x, pathWithField)
+        FactoryChangeDTO.createAdded(element.fieldReal, element.valueReal, element.path)
       );
     });
 
-    objRemoved.forEach(x=>{
+    objRemoved.forEach((x: any) => {
+      let element = this.getCustomArrayFieldChange(field, pathWithField, x);
       changes.push(
-        FactoryChangeDTO.createRemoved(x.toString(), x, pathWithField)
+        FactoryChangeDTO.createRemoved(element.fieldReal, element.valueReal, element.path)
       );
+
     })
 
     return changes;
+  }
+
+
+  private getCustomArrayFieldChange(field, path: string[], value: any): any {
+    if (field == "required") {
+      field = value;
+      value = "required";
+    }
+    return { fieldReal: field, valueReal: value, path };
   }
 }
