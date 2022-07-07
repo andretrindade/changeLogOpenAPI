@@ -29,6 +29,7 @@
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.27.2",
     "excel4node": "^1.7.2",
+    "linq-to-typescript": "^10.0.0",
     "memory-fs": "^0.5.0"
   }
 }

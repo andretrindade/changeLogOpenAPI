@@ -10,8 +10,8 @@ describe('testing versionCompareService file', () => {
         .compare("./tests/documents/yaml-OpenAPI/old.yaml",
         "./tests/documents/yaml-OpenAPI/current.yaml");
 
-    expect(result[0].description).toBe("'title' alterado de 'API CreditCard - Open Banking Brasil' para 'API Accounts - Open Banking Brasil';")
-    expect(result[0].endpoint).toBe('info');
+    expect(result[0].description).toBe("'pattern' alterado de '^(\\w{3}){1}$' para '^(\\w{3}){2}$';")
+    expect(result[0].endpoint).toBe( "accounts/{accountId}/overdraft-limits/");
 
   });
 
@@ -22,9 +22,9 @@ describe('testing versionCompareService file', () => {
         .compare("./tests/documents/yaml-OpenAPI/old.yaml",
         "./tests/documents/yaml-OpenAPI/current.yaml");
 
-        expect(result[0].description).toBe("'title' alterado de 'API CreditCard - Open Banking Brasil' para 'API Accounts - Open Banking Brasil';")
+        expect(result[0].description).toBe("'pattern' alterado de '^(\\w{3}){1}$' para '^(\\w{3}){2}$';")
 
-    expect(result[0].endpoint).toBe('info');
+    expect(result[0].endpoint).toBe("accounts/{accountId}/overdraft-limits/");
 
   });
 

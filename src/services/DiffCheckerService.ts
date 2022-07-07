@@ -58,7 +58,9 @@ export default class DiffCheckerService {
 
         if (Array.isArray(valueCurrent) && typeof valueCurrent[0] !== 'object') {
           path.push(fieldCurrent);
-          let changesWithObjecArray = this.getChangeDiffArray(fieldCurrent, valueOld, valueCurrent, path)
+          let pathTemp = Object.assign([],path)
+
+          let changesWithObjecArray = this.getChangeDiffArray(fieldCurrent, valueOld, valueCurrent, pathTemp)
           changes.push(...changesWithObjecArray);
           path.pop();
 
@@ -102,14 +104,14 @@ export default class DiffCheckerService {
     let objAdded = objCurrent.filter(x => !objOld.includes(x));
 
     objAdded.forEach((x: any) => {
-      let element = this.getCustomArrayFieldChange(field, pathWithField, x);
+      let element = this.getCustomArrayFieldChange(field, Object.assign([],pathWithField), x);
       changes.push(
         FactoryChangeDTO.createAdded(element.fieldReal, element.valueReal, element.path)
       );
     });
 
     objRemoved.forEach((x: any) => {
-      let element = this.getCustomArrayFieldChange(field, pathWithField, x);
+      let element = this.getCustomArrayFieldChange(field, Object.assign([],pathWithField), x);
       changes.push(
         FactoryChangeDTO.createRemoved(element.fieldReal, element.valueReal, element.path)
       );
@@ -123,8 +125,8 @@ export default class DiffCheckerService {
   private getCustomArrayFieldChange(field : string, path: string[], value: any): any {
     if (field == "required") {
       path.pop();
-      path.push("properties");
-      path.push(value)
+      path.push("properties")
+      path.push(value);
       value = "required";
     }
     return { fieldReal: field, valueReal: value, path };
