@@ -13,7 +13,7 @@ let urlCurrent = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR
 
 let result = await changeLogGeneratorService.GenerateChangeLogWithUrlYaml(urlOld,urlCurrent);
 
-expect(result.fileFullName).toBe("output/resources/changeLog.xlsx")
+expect(result.fileFullName).toBe("output/resources/resources_changeLog.xlsx")
 
 
   });

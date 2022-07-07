@@ -1,5 +1,6 @@
 import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpointDTO";
 import ChangeLogViewOutputDTO from "../dtos/ChangeLogViewOutputDTO";
+import { from } from "linq-to-typescript"
 
 export default class FormattingChangeService{
     public formatting(changeLogs: ChangeLogSeparatePerEndpointDTO[]) : ChangeLogViewOutputDTO[] {
@@ -19,7 +20,11 @@ export default class FormattingChangeService{
         });
         });
 
-        return changeLogViewOutputList;
+        let lst = from(changeLogViewOutputList)
+                    .orderBy(x=>x.endpoint)
+                    .thenBy(x=>x.path)
+                    .thenBy(x=>x.field).toArray();
+        return lst;
         
     }
 
