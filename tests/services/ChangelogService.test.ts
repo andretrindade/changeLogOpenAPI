@@ -26,7 +26,7 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrente);
 
     let result = changeLogService.getChangeLog(changes);
-    expect(result[0].changeLogs[0].description[0]).toBe("Campo 'pattern' alterado de '\[w*]' para '/[w/W/s]*'");
+    expect(result[0].changeLogs[0].description[0]).toBe("'pattern' alterado de '\[w*]' para '/[w/W/s]*';");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
@@ -55,7 +55,7 @@ describe('testing changeLogService file', () => {
 
     let result = changeLogService.getChangeLog(changes);
 
-    expect(result[0].changeLogs[0].description[0]).toBe("Campo 'maxItem' adicionado");
+    expect(result[0].changeLogs[0].description[0]).toBe("'maxItem' adicionado;");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 

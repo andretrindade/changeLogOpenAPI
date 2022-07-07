@@ -1,26 +1,37 @@
-import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpointDTO";
 import ChangeLogViewOutputDTO from "../dtos/ChangeLogViewOutputDTO";
 import ChangeLogService from "./ChangeLogService";
 import DiffCheckerService from "./DiffCheckerService";
 import FormattingChangeService from "./FormattingChangeService";
 import SwaggerDereferencerService from "./SwaggerDereferencerService";
 import SwaggerPreparationDataService from "./SwaggerPreparationDataService";
+import UrlToFileYamlService from "./UrlToYaml";
 
 export default class VersionCompareService {
     private _changeLogService: ChangeLogService;
     private _diffCheckerService: DiffCheckerService;
     private _formattingChangeService : FormattingChangeService;
+    private _urlToFileYamlService : UrlToFileYamlService;
 
     constructor() {
         this._changeLogService = new ChangeLogService();
         this._diffCheckerService = new DiffCheckerService();
         this._formattingChangeService = new FormattingChangeService();
+        this._urlToFileYamlService = new UrlToFileYamlService();
     }
     
-    public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
+    public async compareWithUrl(urlOld: string, urlCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
+        let fileOld = await  this._urlToFileYamlService.convertUrlToFileYaml(urlOld);
+        let fileCurrent = await  this._urlToFileYamlService.convertUrlToFileYaml(urlCurrent);
+        let changesView =   this.compare(fileOld,fileCurrent);
 
-        let objOld = await  SwaggerDereferencerService.dereferenceFile(fileOld);
-        let objCurrent = await SwaggerDereferencerService.dereferenceFile(fileCurrent);
+        return changesView;
+        
+    }
+
+    private async getChanges(fileOld : any, fileCurrent:any){
+        
+        let objOld = await  SwaggerDereferencerService.dereference(fileOld);
+        let objCurrent = await SwaggerDereferencerService.dereference(fileCurrent);
 
         let objOldWithComponents =   SwaggerPreparationDataService.Prepare(objOld);
         let objCurrentWithComponents =   SwaggerPreparationDataService.Prepare(objCurrent);
@@ -29,6 +40,12 @@ export default class VersionCompareService {
         let changeLogs = this._changeLogService.getChangeLog(changes);
         
         let changesView = this._formattingChangeService.formatting(changeLogs);
+
+        return changesView;
+    }
+
+    public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
+        let changesView =   this.getChanges(fileOld,fileCurrent);
 
         return changesView;
     }

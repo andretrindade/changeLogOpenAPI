@@ -10,8 +10,35 @@ describe('testing versionCompareService file', () => {
         .compare("./tests/documents/yaml-OpenAPI/old.yaml",
         "./tests/documents/yaml-OpenAPI/current.yaml");
 
-    expect(result[0].description).toBe("Campo 'title' alterado de 'API CreditCard - Open Banking Brasil' para 'API Accounts - Open Banking Brasil'")
+    expect(result[0].description).toBe("'title' alterado de 'API CreditCard - Open Banking Brasil' para 'API Accounts - Open Banking Brasil';")
     expect(result[0].endpoint).toBe('info');
+
+  });
+
+  test('Compare 2 file yaml - unnaranged', async () => {
+
+    const versionCompareService = new VersionCompareService();
+    let result = await versionCompareService
+        .compare("./tests/documents/yaml-OpenAPI/old.yaml",
+        "./tests/documents/yaml-OpenAPI/current.yaml");
+
+        expect(result[0].description).toBe("'title' alterado de 'API CreditCard - Open Banking Brasil' para 'API Accounts - Open Banking Brasil';")
+
+    expect(result[0].endpoint).toBe('info');
+
+  });
+
+  test('Compare 2 url yaml - unnaranged', async () => {
+
+    const versionCompareService = new VersionCompareService();
+    let urlOld = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR-F2/swagger-apis/resources/1.0.2.yml";
+let urlCurrent = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR-F2/swagger-apis/resources/2.0.0.yml";
+
+    let result = await versionCompareService
+        .compareWithUrl(urlOld,
+          urlCurrent);
+
+        expect(result[0].endpoint).toBe("info")
 
   });
 
@@ -24,7 +51,7 @@ describe('testing versionCompareService file', () => {
    
         expect(
       result[0].description)
-      .toBe("Campo 'tags' adicionado")
+      .toBe("'tags' adicionado;")
 
   });
 });

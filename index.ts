@@ -2,16 +2,13 @@
 // Favor utilizar mecanismos de testes para validar aplicação. 
 // npm test
 
-import SheetGeneratorService from "./src/services/SheetGeneratorService";
-import VersionCompareService from "./src/services/VersionCompareService";
+import ChangeLogGeneratorService from "./src/services/ChangeLogGeneratorService";
 
 
-let fileOld = "./documents/unnaranged/1.0.4.yaml";
-let fileCurrent = "./documents/unnaranged/2.0.0.yaml";
 
-const versionCompareService = new VersionCompareService();
-let result = versionCompareService
-    .compare(fileOld,fileCurrent);
+let changeLogGeneratorService = new  ChangeLogGeneratorService();
+let urlOld = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR-F2/swagger-apis/resources/1.0.2.yml";
+let urlCurrent = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR-F2/swagger-apis/resources/2.0.0.yml";
 
-result.then(value => new SheetGeneratorService().generate(value, "changelog"))
-result.then(value => console.log(value));
+
+changeLogGeneratorService.GenerateChangeLogWithUrlYaml(urlOld,urlCurrent);

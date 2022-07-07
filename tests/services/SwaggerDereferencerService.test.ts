@@ -4,7 +4,7 @@ import * as fs from 'fs';
 
 describe('testing dereferenced file generation', () => {
   test('should generate json file', () => {
-    let objResult = SwaggerDereferencerService.dereferenceFile("tests/documents/yaml-OpenAPI/current.yaml")
+    let objResult = SwaggerDereferencerService.dereference("tests/documents/yaml-OpenAPI/current.yaml")
     objResult.then(x=>{
       expect(x).toBe(true);
     })
@@ -13,7 +13,16 @@ describe('testing dereferenced file generation', () => {
 
   test('should generate yaml file', () => {
     jest.useFakeTimers();
-    SwaggerDereferencerService.dereferenceFile("tests/documents/yaml-OpenAPI/current.yaml")
+    SwaggerDereferencerService.dereference("tests/documents/yaml-OpenAPI/current.yaml")
+    setTimeout(() => {
+      expect(fs.existsSync("tests/documents/yaml-OpenAPI/dereferenced_files/current.yaml")).toBe(true);
+    },
+      5000);
+  });
+
+  test('should generate yaml file', () => {
+    jest.useFakeTimers();
+    SwaggerDereferencerService.dereference("tests/documents/yaml-OpenAPI/current.yaml")
     setTimeout(() => {
       expect(fs.existsSync("tests/documents/yaml-OpenAPI/dereferenced_files/current.yaml")).toBe(true);
     },
