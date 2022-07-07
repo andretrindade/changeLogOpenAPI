@@ -34,7 +34,6 @@ export default class FormattingChangeService{
     public wordsForRemove(): any []{
         let lst : any[] = [
             {from: "content/application/json; charset=utf-8", to : ""},
-            {from:"/properties", to:""},
             {from :"application/json/", to:""},
             {from :"paths//", to:""}
         ]

@@ -25,7 +25,7 @@ export default class CustomDescriptionChangeLogService {
         let description = textOld;
         if(TypeChange.added == type){
             description = "Campo tornou-se obrigatório;"
-        }else if(TypeChange.edited == type){
+        }else if(TypeChange.removed == type){
             description = "Obrigatoriedade removida;"
         }
         return description
@@ -33,7 +33,6 @@ export default class CustomDescriptionChangeLogService {
 
     private static addCustomDescriptionByField(field:string, type: TypeChange, textOld : string){
         let description = textOld
-
         if(field=="required"){
             description = this.addCustomDescriptyRequired(field,type,textOld);
         }
