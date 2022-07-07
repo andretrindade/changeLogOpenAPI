@@ -120,9 +120,10 @@ export default class DiffCheckerService {
   }
 
 
-  private getCustomArrayFieldChange(field, path: string[], value: any): any {
+  private getCustomArrayFieldChange(field : string, path: string[], value: any): any {
     if (field == "required") {
-      field = value;
+      path.pop();
+      path.push(value)
       value = "required";
     }
     return { fieldReal: field, valueReal: value, path };

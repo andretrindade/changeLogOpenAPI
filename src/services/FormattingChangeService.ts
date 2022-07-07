@@ -9,7 +9,7 @@ export default class FormattingChangeService{
             changePerEndPoint.changeLogs.forEach(change=>{
 
             let changeLogViewOutputDto : ChangeLogViewOutputDTO = {
-                 endpoint: changePerEndPoint.endpoint,
+                 endpoint: this.replaceWord(changePerEndPoint.endpoint),
                  field: this.replaceWord(change.field),
                  description:  change.description.join("; "),
                  path: this.replaceWord(change.path.replace(changePerEndPoint.endpoint, ""))
@@ -35,7 +35,8 @@ export default class FormattingChangeService{
         let lst : any[] = [
             {from: "content/application/json; charset=utf-8", to : ""},
             {from:"/properties", to:""},
-            {from :"application/json/", to:""}
+            {from :"application/json/", to:""},
+            {from :"paths//", to:""}
         ]
 
 

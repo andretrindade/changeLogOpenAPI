@@ -5,7 +5,7 @@ import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
 export default class SheetGeneratorService {
 
 
-    public generate(changes: ChangeLogViewOutputDTO[], fileName: String) {
+    public generate(changes: ChangeLogViewOutputDTO[], fileFullName: String):  string {
 
 
         const wb = new Workbook();
@@ -14,12 +14,11 @@ export default class SheetGeneratorService {
         this.createHeader(ws)
 
         this.fillWorksheet(changes, ws)
+        let fileName = `${fileFullName}changeLog.xlsx`;
+        wb.write(fileName);
 
-        const path = "output"
-        if (!fs.existsSync(path)) {
-            fs.mkdirSync(path);
-        }
-        wb.write(path + `/${fileName}.xlsx`);
+        return fileName;
+
     }
 
     private createHeader(ws: any) {
