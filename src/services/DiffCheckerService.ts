@@ -123,6 +123,7 @@ export default class DiffCheckerService {
   private getCustomArrayFieldChange(field : string, path: string[], value: any): any {
     if (field == "required") {
       path.pop();
+      path.push("properties");
       path.push(value)
       value = "required";
     }
