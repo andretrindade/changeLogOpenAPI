@@ -7,8 +7,8 @@ describe('testing versionCompareService file', () => {
 
     const versionCompareService = new VersionCompareService();
     let result = await versionCompareService
-        .compare("./tests/documents/yaml-OpenAPI/old.yaml",
-        "./tests/documents/yaml-OpenAPI/current.yaml");
+        .compareWithUrl("https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/loans/1.0.4.yml",
+        "https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/loans/2.0.0.yml");
 
     expect(result[0].description).toBe("'pattern' alterado de '^(\\w{3}){1}$' para '^(\\w{3}){2}$';")
     expect(result[0].endpoint).toBe( "accounts/{accountId}/overdraft-limits/");
