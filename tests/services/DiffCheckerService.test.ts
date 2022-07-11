@@ -285,7 +285,7 @@ describe('testing diffCheckers file', () => {
     };
     let result = diff.getChangeDiff(objOld, objCurrente);
     expect(result[0].valueOld).toBe(undefined);
-    expect(result[0].valueCurrent).toBe("teste3");
+    expect(result[0].valueCurrent).toBe("fee");
     expect(result[0].path[0]).toBe('release');
     expect(result[0].path[1]).toBe('fee');
   });
@@ -315,7 +315,7 @@ describe('testing diffCheckers file', () => {
       }
     };
     let result = diff.getChangeDiff(objOld, objCurrente);
-    expect(result[0].valueOld).toBe("teste3");
+    expect(result[0].valueOld).toBe("fee");
     expect(result[0].valueCurrent).toBe(undefined);
     expect(result[0].path[0]).toBe('release');
     expect(result[0].path[1]).toBe('fee');
