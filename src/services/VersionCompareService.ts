@@ -22,13 +22,13 @@ export default class VersionCompareService {
     public async compareWithUrl(urlOld: string, urlCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
         let fileOld = await  this._urlToFileYamlService.convertUrlToFileYaml(urlOld);
         let fileCurrent = await  this._urlToFileYamlService.convertUrlToFileYaml(urlCurrent);
-        let changesView =   this.compare(fileOld,fileCurrent);
+        let changesView =  await this.compare(fileOld,fileCurrent);
 
         return changesView;
         
     }
 
-    private async getChanges(fileOld : any, fileCurrent:any){
+    private async getChanges(fileOld : any, fileCurrent:any):Promise<ChangeLogViewOutputDTO[]>{
         
         let objOld = await  SwaggerDereferencerService.dereference(fileOld);
         let objCurrent = await SwaggerDereferencerService.dereference(fileCurrent);
@@ -45,7 +45,7 @@ export default class VersionCompareService {
     }
 
     public async compare(fileOld: string, fileCurrent: string): Promise<ChangeLogViewOutputDTO[]> {
-        let changesView =   this.getChanges(fileOld,fileCurrent);
+        let changesView =  await this.getChanges(fileOld,fileCurrent);
 
         return changesView;
     }

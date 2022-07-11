@@ -6,6 +6,8 @@ export default class DiffCheckerService {
 
 
   public getChangeDiff(objOld: any, objCurrent: any): ChangeDTO[] {
+    objOld = this.convertNameToIdArrayParameters(objOld);
+    objCurrent = this.convertNameToIdArrayParameters(objCurrent);
     let changes = this.diff(objOld, objCurrent);
     return changes;
   }
@@ -66,11 +68,6 @@ export default class DiffCheckerService {
 
         } else {
 
-          if (Array.isArray(valueCurrent) && typeof valueCurrent[0] == 'object') {
-
-            valueCurrent = valueCurrent[0];
-            valueOld = valueOld[0];
-          }
           if (typeof valueCurrent == 'object') {
             path.push(fieldCurrent);
             changes.push(...this.diff(valueOld, valueCurrent, path));
@@ -95,10 +92,30 @@ export default class DiffCheckerService {
     return changes;
   }
 
+  private convertNameToIdArrayParameters(obj: any): any {
+    if(obj.paths ==undefined){
+      return obj
+    }
+    let pathsProperties = Object.getOwnPropertyNames(obj.paths);
+
+    pathsProperties.forEach(x => {
+      let path = obj.paths[x];
+      let verbs = Object.getOwnPropertyNames(path);
+      verbs.forEach(y => {
+        let newParameters: any = {};
+        path[y].parameters.forEach(parameter => {
+          newParameters[parameter.name]= parameter;
+        })
+
+        path[y].parameters = newParameters
+      })
+    })
+    return obj;
+  }
+
   public getChangeDiffArray(field: string, objOld: object[], objCurrent: object[], path: string[]): ChangeDTO[] {
     let changes: ChangeDTO[] = [];
     let pathWithField = path;
-    // pathWithField.push(field);
     let objRemoved = objOld.filter(x => !objCurrent.includes(x));
 
     let objAdded = objCurrent.filter(x => !objOld.includes(x));
