@@ -1,6 +1,3 @@
-import { TypeChange } from "../../src/constants/Constant";
-import ChangeDTO from "../../src/dtos/ChangeDTO";
-import DictionaryDTO from "../../src/dtos/DictionaryDTO";
 import ChangeLogService from "../../src/services/ChangeLogService";
 import DiffChecker from "../../src/services/DiffCheckerService";
 
@@ -26,7 +23,8 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrente);
 
     let result = changeLogService.getChangeLog(changes);
-    expect(result[0].changeLogs[0].description[0]).toBe("'pattern' alterado de '\[w*]' para '/[w/W/s]*';");
+    expect(result[0].changeLogs[0].resume).toBe("'pattern' alterado;");
+    expect(result[0].changeLogs[0].detail[0]).toBe("'pattern' alterado de '\[w*]' para '/[w/W/s]*';");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
@@ -55,7 +53,8 @@ describe('testing changeLogService file', () => {
 
     let result = changeLogService.getChangeLog(changes);
 
-    expect(result[0].changeLogs[0].description[0]).toBe("'maxItem' adicionado;");
+    expect(result[0].changeLogs[0].resume).toBe("'maxItem' adicionado;");
+    expect(result[0].changeLogs[0].detail[0]).toBe("'maxItem': '2';");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
