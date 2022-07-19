@@ -12,11 +12,11 @@ export default class FormattingChangeService{
             let changeLogViewOutputDto : ChangeLogViewOutputDTO = {
                  endpoint: this.replaceWord(changePerEndPoint.endpoint),
                  field: this.replaceWord(change.field),
-                 description:  change.description.join("; "),
+                 detail:  change.detail.join("; "),
+                 resume: change.resume,
                  path: this.replaceWord(change.path.replace(changePerEndPoint.endpoint, ""))
             };
             changeLogViewOutputList.push(changeLogViewOutputDto);
-
         });
         });
 
