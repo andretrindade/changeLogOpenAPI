@@ -1,10 +1,9 @@
 import ChangeDTO from "./ChangeDTO"
-import DictionaryDTO from "./DictionaryDTO"
 
-export default class ChangeLogDTO{
-    public change : ChangeDTO
-    public description: string[];
-    public path : string; 
-    public field : string;
-
+export default class ChangeLogDTO {
+    public change: ChangeDTO;
+    public resume: string;
+    public detail: string[];
+    public path: string;
+    public field: string;
 }

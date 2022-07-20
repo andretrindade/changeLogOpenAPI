@@ -1,5 +1,4 @@
 import { Workbook } from 'excel4node'
-import * as fs from 'fs';
 import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
 
 export default class SheetGeneratorService {
@@ -26,7 +25,8 @@ export default class SheetGeneratorService {
             "ENDPOINT",
             "CAMINHO",
             "CAMPO",
-            "ALTERAÇÃO"
+            "ALTERAÇÃO",
+            "ALTERAÇÃO DETALHADA"
         ]
 
         let headingColumnIndex = 1;
@@ -39,7 +39,6 @@ export default class SheetGeneratorService {
         let rowIndex = 2;
 
         data.forEach(record => {
-            let columnIndex = 1;
             Object.keys(record).forEach(columnName => {
                 ws.cell(rowIndex, COLUMNINDEX[columnName.toUpperCase()])
                     .string(record[columnName])
@@ -54,5 +53,6 @@ enum COLUMNINDEX {
     "ENDPOINT" = 1,
     "PATH" = 2,
     "FIELD" = 3,
-    "DESCRIPTION" = 4
+    "RESUME" = 4,
+    "DETAIL" = 5
 }
