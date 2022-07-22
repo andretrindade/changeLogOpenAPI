@@ -1,7 +1,11 @@
 import { Workbook } from 'excel4node'
 import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
+import * as fs from 'fs';
+import FileExtensionService from './FileExtensionService';
 
 export default class SheetGeneratorService {
+
+
 
 
     public generate(changes: ChangeLogViewOutputDTO[], fileFullName: String):  string {
@@ -14,6 +18,10 @@ export default class SheetGeneratorService {
 
         this.fillWorksheet(changes, ws)
         let fileName = `${fileFullName}changeLog.xlsx`;
+        FileExtensionService.CreateFolderByFullPath(fileName);
+        if(fs.existsSync(fileName)){
+            fs.unlinkSync(fileName)
+        }
         wb.write(fileName);
 
         return fileName;

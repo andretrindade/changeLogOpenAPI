@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as fs from 'fs';
+import FileExtensionService from './FileExtensionService';
+import NamesApiFromUrlExtensionService from './NamesApiFromUrlExtensionService';
 export default class UrlToFileYamlService {
 
     public async getDataYamlFromUrl(url: string): Promise<string> {
@@ -20,25 +22,16 @@ export default class UrlToFileYamlService {
 
         let data = ""
         data = await this.getDataYamlFromUrl(url);
-        let fileFullName = ""
 
-        let urlWithSplit = url.split("/");
-        let fileName = urlWithSplit.pop();
-        
-        let path = `output/${urlWithSplit.pop()}`;
-        fileFullName = `${path}/${fileName}`;
+        let fileFullName = `output/${NamesApiFromUrlExtensionService.getNameApiWithVersionFromUrl(url)}`
+
+        FileExtensionService.CreateFolderByFullPath(fileFullName);
         try {
-            if (!fs.existsSync("output")) {
-                fs.mkdirSync("output");
-            }
-            if (!fs.existsSync(path)) {
-                fs.mkdirSync(path);
-            }
-
             fs.writeFileSync(fileFullName, data)
         } catch (exception) {
             process.stderr.write(`ERROR received - ConvertUrlToFileYaml: ${exception}\n`);
         }
+
         return fileFullName;
     }
 }
