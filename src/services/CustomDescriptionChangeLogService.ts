@@ -17,7 +17,7 @@ export default class CustomDescriptionChangeLogService {
                 break;
         }
 
-        description = this.addCustomDescriptionByField(change.field, change.typeChange, description);
+        description = this.addCustomDescriptionByField(change.field, change.typeChange, description, change.valueCurrent, change.valueOld);
 
         return description;
     }
@@ -44,12 +44,34 @@ export default class CustomDescriptionChangeLogService {
         return description
     }
 
-    private static addCustomDescriptionByField(field: string, type: TypeChange, textOld: string) {
+    private static addCustomDescriptyConditional(valueCurrent: string, valueOld: string, type: TypeChange, textOld: string) {
+        let description = textOld;
+
+        const hasRestrictionOld = valueOld.includes('[Restrição]');
+        const hasRestrictionCurrent = valueCurrent.includes('[Restrição]');
+
+        const isAddedRestricion = TypeChange.added === type && !hasRestrictionOld && hasRestrictionCurrent;
+        const isRemovedRestricion = TypeChange.removed === type && hasRestrictionOld && !hasRestrictionCurrent;
+        const isEditedButRemovedRestricion = TypeChange.edited === type && hasRestrictionOld && !hasRestrictionCurrent;
+        const isEditedButAddedRestricion = TypeChange.edited === type && !hasRestrictionOld && hasRestrictionCurrent;  
+
+        if (isAddedRestricion || isEditedButAddedRestricion) {
+            description = 'Tornou-se condicional;';
+        } else if (isRemovedRestricion || isEditedButRemovedRestricion) {
+            description = 'Removido a condicionalidade;';
+        }
+        
+        return description;
+    }
+
+    private static addCustomDescriptionByField(field: string, type: TypeChange, textOld: string, valueCurrent?: string, valueOld?: string) {
         let description = textOld
-        if (field == "required") {
+        if (field == 'required') {
             description = this.addCustomDescriptyRequired(field, type, textOld);
+        } else if(field === 'description') {
+            description = this.addCustomDescriptyConditional(valueCurrent, valueOld, type, textOld);
         }
 
-        return description
+        return description;
     }
 }
