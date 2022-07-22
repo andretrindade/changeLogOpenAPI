@@ -102,4 +102,56 @@ describe('testing changeLogService file', () => {
 
     expect(result.length).toBe(3);
   });
+
+  test('field edited removing restricion', () => {
+
+    const changeLogService = new ChangeLogService();
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+      release : {
+        description: '[Restrição] a b c d'
+      }
+    };
+
+    var objCurrent = {
+      release : {
+        description: 'a b c d e f'
+      }
+    };
+
+    let changes = diff.getChangeDiff(objOld, objCurrent);
+
+    let result = changeLogService.getChangeLog(changes);
+    expect(result[0].changeLogs[0].resume).toBe('Removido a condicionalidade;');
+    expect(result[0].changeLogs[0].detail[0]).toBe("'description' alterado de '[Restrição] a b c d' para 'a b c d e f';");
+    expect(result[0].changeLogs[0].path).toBe('release');
+  });
+
+  test('field edited added restricion', () => {
+
+    const changeLogService = new ChangeLogService();
+
+    const diff = new DiffChecker();
+
+    var objOld = {
+      release : {
+        description: '1 2 3 4'
+      }
+    };
+
+    var objCurrent = {
+      release : {
+        description: '[Restrição] 1 2 3 4 5'
+      }
+    };
+
+    let changes = diff.getChangeDiff(objOld, objCurrent);
+
+    let result = changeLogService.getChangeLog(changes);
+    expect(result[0].changeLogs[0].resume).toBe('Tornou-se condicional;');
+    expect(result[0].changeLogs[0].detail[0]).toBe("'description' alterado de '1 2 3 4' para '[Restrição] 1 2 3 4 5';");
+    expect(result[0].changeLogs[0].path).toBe('release');
+  });
 });
