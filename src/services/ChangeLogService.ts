@@ -7,16 +7,16 @@ export default class ChangeLogService {
 
     private createChangeLog(change: ChangeDTO): ChangeLogDTO {
 
-        let detailedDescription = CustomDescriptionChangeLogService.addDetailedChangeDescription(change);
-        let resumedDescription = CustomDescriptionChangeLogService.addResumedChangeDescription(change);
+        let description = CustomDescriptionChangeLogService.addCustomChangeDescription(change);
 
         let changeLog: ChangeLogDTO =
         {
             change: change,
-            detail: [detailedDescription],
             path: change.path.join('/'),
             field: change.field,
-            resume: resumedDescription
+            currentValue: change.valueCurrent,
+            oldValue: change.valueOld,
+            description: description
         }
 
         return changeLog

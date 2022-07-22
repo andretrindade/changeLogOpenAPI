@@ -23,8 +23,9 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrente);
 
     let result = changeLogService.getChangeLog(changes);
-    expect(result[0].changeLogs[0].resume).toBe("'pattern' alterado;");
-    expect(result[0].changeLogs[0].detail[0]).toBe("'pattern' alterado de '\[w*]' para '/[w/W/s]*';");
+    expect(result[0].changeLogs[0].description).toBe("'pattern' alterado;");
+    expect(result[0].changeLogs[0].currentValue).toBe("/[w/W/s]*");
+    expect(result[0].changeLogs[0].oldValue).toBe("\[w*]");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
@@ -53,8 +54,9 @@ describe('testing changeLogService file', () => {
 
     let result = changeLogService.getChangeLog(changes);
 
-    expect(result[0].changeLogs[0].resume).toBe("'maxItem' adicionado;");
-    expect(result[0].changeLogs[0].detail[0]).toBe("'maxItem': '2';");
+    expect(result[0].changeLogs[0].description).toBe("'maxItem' adicionado;");
+    expect(result[0].changeLogs[0].currentValue).toBe(2);
+    expect(result[0].changeLogs[0].oldValue).toBe(undefined);
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
@@ -124,8 +126,9 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrent);
 
     let result = changeLogService.getChangeLog(changes);
-    expect(result[0].changeLogs[0].resume).toBe('Removido a condicionalidade;');
-    expect(result[0].changeLogs[0].detail[0]).toBe("'description' alterado de '[Restrição] a b c d' para 'a b c d e f';");
+    expect(result[0].changeLogs[0].description).toBe('Removido a condicionalidade;');
+    expect(result[0].changeLogs[0].currentValue).toBe("a b c d e f");
+    expect(result[0].changeLogs[0].oldValue).toBe("[Restrição] a b c d");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 
@@ -150,8 +153,9 @@ describe('testing changeLogService file', () => {
     let changes = diff.getChangeDiff(objOld, objCurrent);
 
     let result = changeLogService.getChangeLog(changes);
-    expect(result[0].changeLogs[0].resume).toBe('Tornou-se condicional;');
-    expect(result[0].changeLogs[0].detail[0]).toBe("'description' alterado de '1 2 3 4' para '[Restrição] 1 2 3 4 5';");
+    expect(result[0].changeLogs[0].description).toBe('Tornou-se condicional;');
+    expect(result[0].changeLogs[0].currentValue).toBe("[Restrição] 1 2 3 4 5");
+    expect(result[0].changeLogs[0].oldValue).toBe("1 2 3 4");
     expect(result[0].changeLogs[0].path).toBe('release');
   });
 });
