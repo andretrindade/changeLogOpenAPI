@@ -3,12 +3,22 @@
 // npm test
 
 import ChangeLogGeneratorService from "./src/services/ChangeLogGeneratorService";
+import apiFase2 from "./src/documents/ApiFase2.json"
+let changeLogGeneratorService = new ChangeLogGeneratorService();
 
 
+apiFase2.url
 
-let changeLogGeneratorService = new  ChangeLogGeneratorService();
-let urlOld = "https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/accounts/1.0.3.yml";
-let urlCurrent = "https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/accounts/2.0.0.yml";
+apiFase2.apis.forEach(api => {
+    api.versoes.forEach(async x => {
 
+        let urlOld = `${apiFase2.url}/${api.api}/${x.old}`;
+        let urlCurrent = `${apiFase2.url}/${api.api}/${x.current}`;
+        console.log(api.api)
+        console.log(urlOld)
+        console.log(urlCurrent)
+        console.log("------")
 
-changeLogGeneratorService.GenerateChangeLogWithUrlYaml(urlOld,urlCurrent);
+        await changeLogGeneratorService.GenerateChangeLogWithUrlYaml(urlOld, urlCurrent);
+    });
+})

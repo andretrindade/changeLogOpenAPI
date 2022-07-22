@@ -30,7 +30,7 @@ export default class CustomDescriptionChangeLogService {
         return description
     }
 
-    private static addCustomDescriptyConditional(valueCurrent: string, valueOld: string, type: TypeChange, textOld: string) {
+    private static addCustomDescriptyConditional(valueCurrent: string = "", valueOld: string = "", type: TypeChange, textOld: string) {
         let description = textOld;
 
         const hasRestrictionOld = valueOld.includes('[Restrição]');
