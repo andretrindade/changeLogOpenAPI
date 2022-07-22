@@ -25,8 +25,9 @@ export default class SheetGeneratorService {
             "ENDPOINT",
             "CAMINHO",
             "CAMPO",
-            "ALTERAÇÃO",
-            "ALTERAÇÃO DETALHADA"
+            "DESCRIÇÃO",
+            "VALOR ANTERIOR",
+            "VALOR ATUAL"
         ]
 
         let headingColumnIndex = 1;
@@ -53,6 +54,7 @@ enum COLUMNINDEX {
     "ENDPOINT" = 1,
     "PATH" = 2,
     "FIELD" = 3,
-    "RESUME" = 4,
-    "DETAIL" = 5
+    "DESCRIPTION" = 4,
+    "OLDVALUE" = 5,
+    "CURRENTVALUE" = 6
 }
