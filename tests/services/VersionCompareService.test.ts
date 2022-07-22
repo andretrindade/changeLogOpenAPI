@@ -10,7 +10,7 @@ describe('testing versionCompareService file', () => {
         .compareWithUrl("https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/resources/1.0.2.yml",
         "https://raw.githubusercontent.com/Sensedia/draft-openapi/main/swagger-apis/resources/2.0.0.yml");
 
-    expect(result[2].resume).toBe("'pagination-key' adicionado;")
+    expect(result[2].description).toBe("'pagination-key' adicionado;")
     expect(result[2].endpoint).toBe( "resources/");
 
   });
@@ -22,7 +22,7 @@ describe('testing versionCompareService file', () => {
         .compare("./tests/documents/resources/1.0.2.yml",
         "./tests/documents/resources/1.0.2 copy.yml");
 
-    expect(result[0].resume).toBe("'pagination-key' adicionado;")
+    expect(result[0].description).toBe("'pagination-key' adicionado;")
 
     expect(result[0].endpoint).toBe("resources/");
 
@@ -50,7 +50,7 @@ let urlCurrent = "https://raw.githubusercontent.com/Sensedia/draft-openapi/GT-PR
         "./tests/documents/yaml-OpenAPI-EndPointChange/current.yaml");
    
         expect(
-      result[0].resume)
+      result[0].description)
       .toBe("'Accounts' adicionado;")
 
   });
