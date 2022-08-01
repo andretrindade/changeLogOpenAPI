@@ -16,9 +16,9 @@ export default class ChangeLogGeneratorService {
         let pathFileName = NamesApiFromUrlExtensionService.getOutputWithApiAndVersion(urlOld,urlCurrent);
         let nameApi = NamesApiFromUrlExtensionService.getApiNameFromUrl(urlOld);
         let nameFile = `${pathFileName}/${nameApi}_`;
-        let fileNameChangeLog = this._sheetGeneratorService.generate(changeLogViewOutputList, nameFile);
+       // let fileNameChangeLog = this._sheetGeneratorService.generate(changeLogViewOutputList, nameFile);
         
-        return {changesLog : changeLogViewOutputList, fileFullName : fileNameChangeLog};
+        return {changesLog : changeLogViewOutputList};
     }
 
     

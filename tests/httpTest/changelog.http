@@ -1,0 +1,7 @@
+POST http://localhost:3000/change-log/generate-change-log   HTTP/1.1
+content-type: application/json
+
+{
+    "urlOld": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/accounts/1.0.3.yml",
+    "urlCurrent": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/accounts/2.0.0.yml"
+}
