@@ -9,12 +9,12 @@ export default class NamesApiFromUrlExtensionService{
         let urlTemp = url.split("/")
         let apiName  = urlTemp.pop();
  
-        return apiName;
+        return apiName || "";
     }
 
     public static getVersionNameFromUrl(url:string):String{
         let urlTemp = url.split("/")
-        let apiName  = urlTemp.pop().replace(".yml", "");
+        let apiName  = (urlTemp.pop() || "").replace(".yml", "");
  
         return apiName;
     }
@@ -24,7 +24,7 @@ export default class NamesApiFromUrlExtensionService{
        urlTemp.pop();
        let apiName  = urlTemp.pop();
 
-       return apiName;
+       return apiName || "";
     }
 
     public static getOutputWithApiAndVersion(urlOld: string, urlCurrent: string):String{
