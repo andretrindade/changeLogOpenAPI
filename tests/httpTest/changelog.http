@@ -1,4 +1,4 @@
-POST https://change-log-yml.herokuapp.com:3000/change-log/generate-change-log   HTTP/1.1
+POST https://change-log-yml.herokuapp.com/change-log/generate-change-log   HTTP/1.1
 content-type: application/json
 
 {
