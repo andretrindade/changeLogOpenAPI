@@ -1,6 +1,6 @@
 
+// @ts-ignore
 import * as swaggerCli from "@apidevtools/swagger-cli"
-import MemoryFileSystem from 'memory-fs'
 export default class SwaggerDereferencerService {
 
     /**

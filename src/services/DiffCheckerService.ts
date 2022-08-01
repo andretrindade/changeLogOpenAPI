@@ -12,9 +12,6 @@ export default class DiffCheckerService {
     return changes;
   }
 
-  public groupFieldChangeDiff(changes: ChangeDTO[]): ChangeDTO[] {
-    return null;
-  }
 
   private diff(objOld: any, objCurrent: any, path?: string[]): ChangeDTO[] {
     path = path || [];
@@ -48,7 +45,7 @@ export default class DiffCheckerService {
     var fieldsCurrent = Object.getOwnPropertyNames(objCurrent);
 
     fieldsOld.forEach(fieldOld => {
-      let objChange: ChangeDTO;
+      let objChange!: ChangeDTO;
 
       let fieldCurrent = fieldsCurrent.find(fielndCurrent => fielndCurrent === fieldOld);
       let valueOld = objOld[fieldOld];
@@ -103,7 +100,7 @@ export default class DiffCheckerService {
       let verbs = Object.getOwnPropertyNames(path);
       verbs.forEach(y => {
         let newParameters: any = {};
-        path[y].parameters.forEach(parameter => {
+        path[y].parameters.forEach((parameter : any) => {
           newParameters[parameter.name]= parameter;
         })
 

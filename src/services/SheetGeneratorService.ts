@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Workbook } from 'excel4node'
 import ChangeLogViewOutputDTO from '../dtos/ChangeLogViewOutputDTO';
 import * as fs from 'fs';
@@ -47,8 +48,8 @@ export default class SheetGeneratorService {
     private fillWorksheet(data: any, ws: any) {
         let rowIndex = 2;
 
-        data.forEach(record => {
-            Object.keys(record).forEach(columnName => {
+        data.forEach((record : any) => {
+            Object.keys(record).forEach( (columnName : any) => {
                 ws.cell(rowIndex, COLUMNINDEX[columnName.toUpperCase()])
                     .string(record[columnName])
             });
