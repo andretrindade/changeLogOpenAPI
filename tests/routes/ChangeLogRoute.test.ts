@@ -17,7 +17,7 @@ describe('POST /change-log/generate-change-log', () => {
       expect(response.statusCode).toEqual(200);
     });
 
-    test('works properly with template removed request', async () => {
+    test('works properly with template added request', async () => {
 
         const templateDescription = new TemplateDescriptionDTO();
         templateDescription.templateAdded = 'test ok ${field}';
