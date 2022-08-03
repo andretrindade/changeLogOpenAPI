@@ -3,9 +3,6 @@
 import * as swaggerCli from "@apidevtools/swagger-cli"
 export default class SwaggerDereferencerService {
 
-    /**
-     * @param files Lista de arquivos para serem desreferenciados
-     */
     public static async dereference(file: String): Promise<any> {
 
         let objJson = {}
