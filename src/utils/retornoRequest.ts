@@ -3,7 +3,7 @@ import HttpStatusCode from "../constants/HttpStatusCode";
 export class RetornoRequest{
     
 
-    public static Response(result: any, error: any, res: any, statusCode:HttpStatusCode){
+    public static Response(result: any, error: any, res: any, statusCode: HttpStatusCode){
 
         res.status(statusCode);
         var retorno = {

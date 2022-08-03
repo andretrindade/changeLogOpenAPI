@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import ChangeLogRequestDTO from 'src/dtos/ChangeLogRequestDTO';
 import HttpStatusCode from '../constants/HttpStatusCode';
 import ChangeLogGeneratorService from "../services/ChangeLogGeneratorService";
 import { RetornoRequest } from '../utils/retornoRequest';
@@ -14,10 +15,10 @@ class ChangeLogRoute {
     public montaRotas(): Router {
 
         let router = express.Router();
-
+        
         router.post('/generate-change-log', (request: any, response: any, next: any) => {
 
-            this._changeLogGeneratorService.GenerateChangeLogWithUrlYaml(request.body.urlOld, request.body.urlCurrent).then(x => {
+            this._changeLogGeneratorService.GenerateChangeLogWithUrlYaml(request.body).then(x => {
                 return RetornoRequest.Response(x, null, response, HttpStatusCode.OK);
             }).catch(x => {
                 next(x)
@@ -27,4 +28,5 @@ class ChangeLogRoute {
         return router;
     }
 }
+
 export { ChangeLogRoute }

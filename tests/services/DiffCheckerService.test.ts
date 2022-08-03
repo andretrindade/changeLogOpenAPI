@@ -360,29 +360,29 @@ describe('testing diffCheckers file', () => {
   });
 
 
-  test('field edited item string in array', () => {
+  // test('field edited item string in array', () => {
 
-    const diff = new DiffChecker();
+  //   const diff = new DiffChecker();
 
-    let changes : ChangeDTO[] = [{
-       path: ["path/contratoId/get/shema/meta/totalRecords"] ,
-       typeChange : 1,
-       field : "string" ,
-       valueOld :"string",
-       valueCurrent :"string"
-  }]
+  //   let changes : ChangeDTO[] = [{
+  //      path: ["path/contratoId/get/shema/meta/totalRecords"] ,
+  //      typeChange : 1,
+  //      field : "string" ,
+  //      valueOld :"string",
+  //      valueCurrent :"string"
+  // }]
 
-    let result = diff.groupFieldChangeDiff(changes);
-    let itemAdded = result[0]
-    let itemRemoved = result[1]
-    expect(itemAdded.valueOld).toBe(undefined);
-    expect(itemAdded.valueCurrent).toBe("teste4");
-    expect(itemAdded.path[0]).toBe('release');
-    expect(itemAdded.path[1]).toBe('fee');
+  //   let result = diff.groupFieldChangeDiff(changes);
+  //   let itemAdded = result[0]
+  //   let itemRemoved = result[1]
+  //   expect(itemAdded.valueOld).toBe(undefined);
+  //   expect(itemAdded.valueCurrent).toBe("teste4");
+  //   expect(itemAdded.path[0]).toBe('release');
+  //   expect(itemAdded.path[1]).toBe('fee');
 
-    expect(itemRemoved.valueOld).toBe("teste3");
-    expect(itemRemoved.valueCurrent).toBe(undefined);
-    expect(itemRemoved.path[0]).toBe('release');
-    expect(itemRemoved.path[1]).toBe('fee');
-  });
+  //   expect(itemRemoved.valueOld).toBe("teste3");
+  //   expect(itemRemoved.valueCurrent).toBe(undefined);
+  //   expect(itemRemoved.path[0]).toBe('release');
+  //   expect(itemRemoved.path[1]).toBe('fee');
+  // });
 });

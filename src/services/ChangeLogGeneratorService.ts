@@ -1,3 +1,4 @@
+import ChangeLogRequestDTO from "src/dtos/ChangeLogRequestDTO";
 import NamesApiFromUrlExtensionService from "./NamesApiFromUrlExtensionService";
 import SheetGeneratorService from "./SheetGeneratorService";
 import VersionCompareService from "./VersionCompareService";
@@ -10,10 +11,12 @@ export default class ChangeLogGeneratorService {
         this._sheetGeneratorService = new SheetGeneratorService();
     }
 
-    public async GenerateChangeLogWithUrlYaml(urlOld: string, urlCurrent: string): Promise<any> {
+    public async GenerateChangeLogWithUrlYaml(request: ChangeLogRequestDTO): Promise<any> {
 
-        let changeLogViewOutputList = await this._versionCompareService.compareWithUrl(urlOld, urlCurrent);
-        let pathFileName = NamesApiFromUrlExtensionService.getOutputWithApiAndVersion(urlOld,urlCurrent);
+        const { urlOld, urlCurrent } = request;
+
+        let changeLogViewOutputList = await this._versionCompareService.compareWithUrl(request);
+        let pathFileName = NamesApiFromUrlExtensionService.getOutputWithApiAndVersion(urlOld, urlCurrent);
         let nameApi = NamesApiFromUrlExtensionService.getApiNameFromUrl(urlOld);
         let nameFile = `${pathFileName}/${nameApi}_`;
        // let fileNameChangeLog = this._sheetGeneratorService.generate(changeLogViewOutputList, nameFile);
