@@ -1,3 +1,4 @@
+import TemplateDescriptionDTO from "src/dtos/TemplateDescriptionDTO";
 import ChangeDTO from "../dtos/ChangeDTO";
 import ChangeLogDTO from "../dtos/ChangeLogDTO";
 import ChangeLogSeparatePerEndpointDTO from "../dtos/ChangeLogSeparatePerEndpointDTO";
@@ -5,9 +6,9 @@ import CustomDescriptionChangeLogService from "./CustomDescriptionChangeLogServi
 
 export default class ChangeLogService {
 
-    private createChangeLog(change: ChangeDTO): ChangeLogDTO {
+    private createChangeLog(change: ChangeDTO, templateDescription?: TemplateDescriptionDTO): ChangeLogDTO {
 
-        let description = CustomDescriptionChangeLogService.addCustomChangeDescription(change);
+        let description = CustomDescriptionChangeLogService.addCustomChangeDescription(change, templateDescription);
 
         let changeLog: ChangeLogDTO =
         {
@@ -22,12 +23,12 @@ export default class ChangeLogService {
         return changeLog
     }
 
-    public getChangeLog(changes: ChangeDTO[]): ChangeLogSeparatePerEndpointDTO[] {
+    public getChangeLog(changes: ChangeDTO[], templateDescription?: TemplateDescriptionDTO): ChangeLogSeparatePerEndpointDTO[] {
 
         let changeLogs: ChangeLogDTO[] = [];
         changes.forEach(change => {
 
-            changeLogs.push(this.createChangeLog(change));
+            changeLogs.push(this.createChangeLog(change, templateDescription));
 
         });
 

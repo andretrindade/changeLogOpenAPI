@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import ChangeLogRequestDTO from 'src/dtos/ChangeLogRequestDTO';
 import HttpStatusCode from '../constants/HttpStatusCode';
 import ChangeLogGeneratorService from "../services/ChangeLogGeneratorService";
 import { RetornoRequest } from '../utils/retornoRequest';
@@ -16,11 +17,11 @@ class ChangeLogRoute {
 
         let router = express.Router();
         
-        router.post('/generate-change-log',(request: any,response:any)=>{
+        router.post('/generate-change-log', (request: any, response: any) => {
 
-            this._changeLogGeneratorService.GenerateChangeLogWithUrlYaml(request.body.urlOld, request.body.urlCurrent).then(x=>{
+            this._changeLogGeneratorService.GenerateChangeLogWithUrlYaml(request.body).then(x => {
                 return RetornoRequest.Response(x, null, response, HttpStatusCode.OK);
-            }).catch(x=>{
+            }).catch(x => {
                 return RetornoRequest.Response(null, x, response, HttpStatusCode.BAD_REQUEST);
             });
         });
@@ -30,4 +31,5 @@ class ChangeLogRoute {
 
 
 }
+
 export { ChangeLogRoute }
