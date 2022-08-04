@@ -1,5 +1,6 @@
 import ChangeLogRequestDTO from "src/dtos/ChangeLogRequestDTO";
 import ChangeLogViewOutputDTO from "../dtos/ChangeLogViewOutputDTO";
+import OpenAPIValidationHandler from "../validation/OpenAPIValidationHandler";
 import ChangeLogService from "./ChangeLogService";
 import DiffCheckerService from "./DiffCheckerService";
 import FormattingChangeService from "./FormattingChangeService";
@@ -37,6 +38,8 @@ export default class VersionCompareService {
         
         let objOld = await  SwaggerDereferencerService.dereference(fileOld);
         let objCurrent = await SwaggerDereferencerService.dereference(fileCurrent);
+
+        await  new OpenAPIValidationHandler().handleValidation(objOld, objCurrent)
 
         let objOldWithComponents =   SwaggerPreparationDataService.Prepare(objOld);
         let objCurrentWithComponents =   SwaggerPreparationDataService.Prepare(objCurrent);

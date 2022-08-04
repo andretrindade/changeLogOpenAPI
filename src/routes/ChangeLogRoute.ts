@@ -9,27 +9,24 @@ class ChangeLogRoute {
     private readonly _changeLogGeneratorService !: ChangeLogGeneratorService
 
     constructor(changeLogGeneratorService: ChangeLogGeneratorService) {
-      this._changeLogGeneratorService = changeLogGeneratorService;
+        this._changeLogGeneratorService = changeLogGeneratorService;
     }
-    
 
     public montaRotas(): Router {
 
         let router = express.Router();
         
-        router.post('/generate-change-log', (request: any, response: any) => {
+        router.post('/generate-change-log', (request: any, response: any, next: any) => {
 
             this._changeLogGeneratorService.GenerateChangeLogWithUrlYaml(request.body).then(x => {
                 return RetornoRequest.Response(x, null, response, HttpStatusCode.OK);
             }).catch(x => {
-                return RetornoRequest.Response(null, x, response, HttpStatusCode.BAD_REQUEST);
+                next(x)
             });
         });
-     
+
         return router;
     }
-
-
 }
 
 export { ChangeLogRoute }

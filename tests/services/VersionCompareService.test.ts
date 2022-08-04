@@ -24,9 +24,9 @@ describe('testing versionCompareService file', () => {
         .compare("./tests/documents/resources/1.0.2.yml",
         "./tests/documents/resources/1.0.2 copy.yml");
 
-    expect(result[0].description).toBe("'pagination-key' adicionado;")
+    expect(result[1].description).toBe("'pagination-key' adicionado;")
 
-    expect(result[0].endpoint).toBe("resources/");
+    expect(result[1].endpoint).toBe("resources/");
 
   });
 
