@@ -1,4 +1,3 @@
-import ChangeDTO from "../../src/dtos/ChangeDTO";
 import DiffChecker from "../../src/services/DiffCheckerService";
 
 describe('testing diffCheckers file', () => {
@@ -349,11 +348,15 @@ describe('testing diffCheckers file', () => {
     let itemAdded = result[0]
     let itemRemoved = result[1]
     expect(itemAdded.valueOld).toBe(undefined);
-    expect(itemAdded.valueCurrent).toBe("teste4");
+    expect(itemAdded.typeChange).toBe(1);
+    expect(itemAdded.valueCurrent).toBe("fee");
+    expect(itemAdded.field).toBe("teste4");
     expect(itemAdded.path[0]).toBe('release');
     expect(itemAdded.path[1]).toBe('fee');
 
-    expect(itemRemoved.valueOld).toBe("teste3");
+    expect(itemRemoved.valueOld).toBe("fee");
+    expect(itemRemoved.field).toBe("teste3");
+    expect(itemRemoved.typeChange).toBe(3);
     expect(itemRemoved.valueCurrent).toBe(undefined);
     expect(itemRemoved.path[0]).toBe('release');
     expect(itemRemoved.path[1]).toBe('fee');
