@@ -140,8 +140,10 @@ export default class DiffCheckerService {
     if (field == "required") {
       path.pop();
       path.push("properties")
-      path.push(value);
-      value = "required";
+      //path.push(value);
+      let fieldTemp = field;
+      field = value
+      value = fieldTemp;
     }else{
       let fieldTemp = field;
       field = value;
