@@ -5,7 +5,7 @@ import ChangeDTO from "../dtos/ChangeDTO";
 export default class CustomDescriptionChangeLogService {
 
     public static addCustomChangeDescription(change: ChangeDTO, templateDescription?: TemplateDescriptionDTO): string {
-        const { field } = change;
+        const { field, valueCurrent } = change;
 
         let description: string = "";
 
@@ -24,15 +24,15 @@ export default class CustomDescriptionChangeLogService {
                 break;
         }
 
-        description = this.addCustomDescriptionByField(field, description, templateRequired);
+        description = this.addCustomDescriptionByValue(valueCurrent, description, templateRequired);
 
         return description;
     }
 
-    private static addCustomDescriptionByField(field: string, textOld: string, templateRequired?: string) {
+    private static addCustomDescriptionByValue(valueCurrent: string = "", textOld: string, templateRequired?: string) {
         let description = textOld;
 
-        if (field == 'required') {
+        if (valueCurrent == 'required') {
             description = templateRequired || 'Alterado mandatoriedade;';
         }
 
